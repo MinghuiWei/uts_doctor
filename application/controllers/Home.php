@@ -66,6 +66,8 @@ class Home extends CI_Controller {
 				"gender" => $this->input->post("gender"),
 				"title" => $this->input->post("title"),
 				"dob" => $this->input->post("dob"),
+				"phone" => $this->input->post("phone"),
+				"address" => $this->input->post("address"),
 				"medicareNo" => $this->input->post("medicareNo"),
 				"type" => "patient"
 			);

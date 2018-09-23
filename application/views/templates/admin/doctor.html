@@ -1,0 +1,67 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div class="mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{site_url('/admin/doctors')}">Doctors</a></li>
+            <li class="breadcrumb-item active">{$data.doctor->title}
+                {$data.doctor->firstname}
+                {$data.doctor->lastname}</li>
+        </ol>
+    </nav>
+
+    <a class="btn btn-info float-right" href="{site_url('/admin/editDoctor/')}{$data.doctor->userId}">Edit</a>
+
+    <h3>{$data.doctor->title}
+        {$data.doctor->firstname}
+        {$data.doctor->lastname}</h3>
+    <hr />
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <dl>
+                        <dt>Email</dt>
+                        <dd>{$data.doctor->email}</dd>
+                    </dl>
+                </div>
+                <div class="col">
+                    <dl>
+                        <dt>Phone</dt>
+                        <dd>{$data.doctor->phone}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <dl>
+                        <dt>Gender</dt>
+                        <dd>{$data.doctor->gender}</dd>
+                    </dl>
+                </div>
+                <div class="col">
+                    <dl>
+                        <dt>Address</dt>
+                        <dd>{$data.doctor->address}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                </div>
+            </div>
+            <dl>
+                <dt>Verification</dt>
+                <dd>{$data.doctor->verification}</dd>
+            </dl>
+            <dl>
+                <dt>Specialty</dt>
+                <dd>{$data.doctor->specialty}</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+{/block}
