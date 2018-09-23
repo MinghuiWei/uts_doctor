@@ -7,16 +7,29 @@ class User_model extends CI_Model
 {
     public $TABLE = "user";
 
-    public function get_all()
+    public function get_all_doctors()
     {
-        $query = $this->db->get_where($this->TABLE, array('visible' => 1));
-        $result = $query->result_array();
+        $query = $this->db->get_where($this->TABLE, array('type' => 'doctor'));
+        $result = $query->result();
+        return $result;
+    }
+
+    public function get_all_secretaries()
+    {
+        $query = $this->db->get_where($this->TABLE, array('type' => 'secretary'));
+        $result = $query->result();
+        return $result;
+    }
+
+    public function get_user($user_id)
+    {
+        $query = $this->db->get_where($this->TABLE, array('userId' => $user_id));
+        $result = $query->row();
         return $result;
     }
 
     public function create_user($user)
     {
-        var_dump($user);
         $this->db->insert($this->TABLE, $user);
         return $this->db->get_where($this->TABLE, array('userId' => $this->db->insert_id()))->row();
     }

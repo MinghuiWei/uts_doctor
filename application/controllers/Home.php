@@ -6,7 +6,6 @@ class Home extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('user_model');
-        
     }
     
     public function index()
@@ -31,7 +30,7 @@ class Home extends CI_Controller {
             if ($user) {
                 // login success then redirect
                 $this->session->set_userdata('user', $user);
-                redirect('/patient/dashboard');
+                redirect($user->type);
             } else {
                 // login fail then show error msg
                 $data['error_msgs'] = 'Invalid email or password.';
