@@ -14,6 +14,10 @@
         crossorigin="anonymous"></script>
 
     <style>
+        body {
+            background: #efefef;
+        }
+
         #left-nav {
             min-height: 100vh;
         }
@@ -41,6 +45,7 @@
                 </div>
 
                 <ul class="list-group list-group-flush">
+                    {if isset($smarty.session.user)}
                     <li class="list-group-item">
                         <a class="text-white" href="{site_url('/')}">
                             <i class="fas fa-home mr-2"></i>
@@ -65,9 +70,30 @@
                             Doctors&nbsp;
                         </a>
                     </li>
+                    <li class="list-group-item">
+                        <a class="text-white" href="{site_url('/home/logout')}">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Logout&nbsp;
+                        </a>
+                    </li>
+                    {/if}
+                    {if not isset($smarty.session.user)}
+                    <li class="list-group-item">
+                        <a class="text-white" href="{site_url('/home/login')}">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Login&nbsp;
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="text-white" href="{site_url('/home/signup')}">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            Sign up&nbsp;
+                        </a>
+                    </li>
+                    {/if}
                 </ul>
             </div>
-            <div class="col-10">
+            <div class="col-10 p-5">
                 {block name=body}{/block}
             </div>
         </div>

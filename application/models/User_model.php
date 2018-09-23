@@ -37,9 +37,6 @@ class User_model extends CI_Model
         if (!$email && $password) {
             return null;
         }
-        // $this->db->where(['username' => $username]);
-        // $user = $this->db->get($this->TABLE)->row(0);
-
         $user = $this->db->get_where($this->TABLE,
             array('email' => $email, 'password' => $password))->row(0);
 
