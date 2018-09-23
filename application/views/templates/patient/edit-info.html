@@ -1,0 +1,120 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <h3>Edit Personal Info</h3>
+    <hr />
+
+    <form method="post">
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-center">Patient Details</h3>
+
+                        {if $data.error_msgs}
+                        <div class="alert alert-danger">{$data.error_msgs}</div>
+                        {/if}
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <select class="form-control" name="title">
+                                        <option value="Mr." {if $smarty.session.user->title == 'Mr.'}selected{/if}>Mr.</option>
+                                        <option value="Mrs." {if $smarty.session.user->title ==
+                                            'Mrs.'}selected{/if}>Mrs.</option>
+                                        <option value="Miss." {if $smarty.session.user->title ==
+                                            'Miss.'}selected{/if}>Miss.</option>
+                                        <option value="Dr." {if $smarty.session.user->title == 'Dr.'}selected{/if}>Dr.</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" name="address" value="{$smarty.session.user->address}" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Firstname</label>
+                                    <input type="text" name="firstname" class="form-control" value="{$smarty.session.user->firstname}"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Lastname</label>
+                                    <input type="text" name="lastname" class="form-control" value="{$smarty.session.user->lastname}"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <p class="text-muted">{$smarty.session.user->email}</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="text" name="phone" value="{$smarty.session.user->phone}" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <select class="form-control" name="gender">
+                                        <option value="Male" {if $smarty.session.user->gender ==
+                                            'Male'}selected{/if}>Male</option>
+                                        <option value="Female" {if $smarty.session.user->gender ==
+                                            'Female'}selected{/if}>Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Birthday</label>
+                                    <input type="date" name="dob" value="{$smarty.session.user->dob}" class="form-control"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Medicare Number</label>
+                                    <input type="text" name="medicareNo" value="{$smarty.session.user->medicareNo}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-lg btn-primary btn-block mb-2" type="submit" name="action" value="continue">
+                            Save</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+
+</div>
+
+{/block}

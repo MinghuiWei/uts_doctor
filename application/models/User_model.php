@@ -5,7 +5,7 @@
 */
 class User_model extends CI_Model
 {
-    public $TABLE = "user";
+    public $TABLE = "User";
     var $firstname = '';
     var $lastname =  '';
     var $gender =  'Male';

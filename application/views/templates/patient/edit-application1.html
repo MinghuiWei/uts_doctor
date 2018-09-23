@@ -1,0 +1,148 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{site_url('/patients/applications')}">Applications</a></li>
+            {if $data.applicationId}
+            <li class="breadcrumb-item active">Edit Application</li>
+            {/if}
+            {if !$data.applicationId}
+            <li class="breadcrumb-item active">New Application</li>
+            {/if}
+        </ol>
+    </nav>
+
+    {if $data.applicationId}
+    <h3>Edit Application</h3>
+    {/if}
+    {if !$data.applicationId}
+    <h3>New Application</h3>
+    {/if}
+    <hr />
+
+    <form method="post">
+        <div class="row">
+            <div class="col-7">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-center">Patient Details</h3>
+                        <p class="text-center text-muted"><small>Click <a href="{site_url('patient/editInfo')}">here</a> to edit personal infomation</small>
+                        </p>
+
+                        {if $data.error_msgs}
+                        <div class="alert alert-danger">{$data.error_msgs}</div>
+                        {/if}
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <p class="text-muted">{$smarty.session.user->title}</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <p class="text-muted">{$smarty.session.user->address}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Firstname</label>
+                                    <p class="text-muted">{$smarty.session.user->firstname}</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Lastname</label>
+                                    <p class="text-muted">{$smarty.session.user->lastname}</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <p class="text-muted">{$smarty.session.user->email}</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <p class="text-muted">{$smarty.session.user->phone}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <p class="text-muted">{$smarty.session.user->gender}</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Birthday</label>
+                                    <p class="text-muted">{$smarty.session.user->dob}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Medicare Number</label>
+                                    <p class="text-muted">{$smarty.session.user->medicareNo}</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button class="btn btn-lg btn-primary btn-block mb-2" type="submit" name="action" value="continue">
+                            Continue to Application Details</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <ul class="list-group">
+                    <li class="list-group-item bg-dark text-white">
+                        <h5><b>Submission Progress</b></h5>
+                    </li>
+                    <li class="list-group-item list-group-item-secondary">
+                        <span class="mr-3">
+                            <i class="fas fa-check-circle text-success progress-icon"></i>
+                        </span>
+                        <b>Patient Details</b>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="mr-3">
+                            <i class="fas fa-minus-circle text-muted progress-icon"></i>
+                        </span>
+                        <b>Application Details</b>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="mr-3">
+                            <i class="fas fa-minus-circle text-muted progress-icon"></i>
+                        </span>
+                        <b>Review and submit</b>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+{/block}

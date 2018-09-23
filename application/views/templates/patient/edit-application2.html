@@ -1,0 +1,192 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{site_url('/patients/applications')}">Applications</a></li>
+            {if $data.applicationId}
+            <li class="breadcrumb-item active">Edit Application</li>
+            {/if}
+            {if !$data.applicationId}
+            <li class="breadcrumb-item active">New Application</li>
+            {/if}
+        </ol>
+    </nav>
+
+    {if $data.applicationId}
+    <h3>Edit Application</h3>
+    {/if}
+    {if !$data.applicationId}
+    <h3>New Application</h3>
+    {/if}
+    <hr />
+
+    <form method="post">
+        <div class="row">
+            <div class="col-7">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-center">Medical Details</h3>
+
+                        {if $data.error_msgs}
+                        <div class="alert alert-danger">{$data.error_msgs}</div>
+                        {/if}
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>General Practitioner (GP)</label>
+                                    <input type="text" name="gp" value="{$data.application->gp}" placeholder="e.g. John" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Location of GP</label>
+                                    <input type="text" name="gpAddress" value="{$data.application->gpAddress}" placeholder="e.g. North Sydney, 2060" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Referal</label>
+                                    <input type="text" name="referal" class="form-control" value="{$data.application->referal}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Other Medical Documents</label>
+                                    <input type="text" name="documents" class="form-control" value="{$data.application->documents}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Further Notes</label>
+                                    <textarea class="form-control" name="notes">{$data.application->notes}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <h3 class="text-center">Appointment Details</h3>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Prefered Medical Professional</label>
+                                    <select class="form-control" name="doctorId" required>
+                                        {foreach from=$data.doctors item=user}
+                                        <option value="{$user->userId}" {if $data.application->doctorId ==
+                                            $user->userId}selected{/if}>{$user->title} {$user->firstname}
+                                            {$user->lastname}</option>
+                                        {/foreach}
+                                    </select> </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Appointment Type</label>
+                                    <select class="form-control" name="appointmentType">
+                                        <option value="Initial" {if $data.application->appointmentType ==
+                                            'Initial'}selected{/if}>Initial</option>
+                                        <option value="Recurring Visit" {if $data.application->appointmentType ==
+                                            'Recurring Visit'}selected{/if}>Recurring Visit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Appointment Topics</label>
+                                    <select class="form-control" name="appointmentTopics">
+                                        <option value="3+" {if $data.application->appointmentTopics ==
+                                            '3+'}selected{/if}>3+</option>
+                                        <option value="18+" {if $data.application->appointmentTopics ==
+                                            '18+'}selected{/if}>18+</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Prefered Days <small class="text-muted">seperated by comma</small></label>
+                                    <input type="text" name="preferedDays" value="{$data.application->preferedDays}"
+                                        placeholder="e.g. Monday, Wednesday" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Prefered Time <small class="text-muted">seperated by comma</small></label>
+                                    <input type="text" name="preferedTime" value="{$data.application->preferedTime}"
+                                        placeholder="e.g. 9:00-5:00 3pm" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Special Patient Requets</label>
+                                    <textarea name="specialRequests" class="form-control">{$data.application->specialRequests}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button class="btn btn-lg btn-primary btn-block mb-2" type="submit" name="action" value="continue">
+                            Save and continue</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <ul class="list-group">
+                    <li class="list-group-item bg-dark text-white">
+                        <h5><b>Submission Progress</b></h5>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="mr-3">
+                            <i class="fas fa-check-circle text-success progress-icon"></i>
+                        </span>
+                        <b>Patient Details</b>
+                        {if $data.applicationId}
+                        <a href="{site_url('/patient/editApplication1/')}/{$data.applicationId}"><small>back</small></a>
+                        {/if}
+                        {if !$data.applicationId}
+                        <a href="{site_url('/patient/editApplication1/')}/"><small>back</small></a>
+                        {/if}
+                    </li>
+                    <li class="list-group-item list-group-item-secondary">
+                        <span class="mr-3">
+                            <i class="fas fa-minus-circle text-muted progress-icon"></i>
+                        </span>
+                        <b>Application Details</b>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="mr-3">
+                            <i class="fas fa-minus-circle text-muted progress-icon"></i>
+                        </span>
+                        <b>Review and submit</b>
+                    </li>
+                </ul>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block mb-2" type="submit" name="action" value="submit"
+                    disabled>Submit Application</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+{/block}

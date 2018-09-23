@@ -16,7 +16,8 @@ class Patient extends CI_Controller {
     
     public function index()
     {
-        $this->my_smarty->view('patient/index');
+        redirect('/patient/applications');
+        // $this->my_smarty->view('patient/index');
     }
     
     public function applications()
@@ -35,5 +36,143 @@ class Patient extends CI_Controller {
     {
         $this->application_model->delete($applicationId);
         redirect('/patient/applications');
+    }
+    
+    public function editInfo()
+    {
+        $user = $this->session->userdata('user');
+        $data = array();
+        $data['error_msgs'] = '';
+        
+        $this->form_validation->set_rules('gender', 'Gender', 'required');
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[10]|numeric');
+        $this->form_validation->set_rules('medicareNo', 'Medicare Number', 'trim|required');
+        
+        if ($this->form_validation->run() === false) {
+            // default return
+            $data['error_msgs'] = validation_errors();
+        } else {
+            $input = array(
+            "userId" => $user->userId,
+            "firstname" => $this->input->post("firstname"),
+            "lastname" => $this->input->post("lastname"),
+            "gender" => $this->input->post("gender"),
+            "title" => $this->input->post("title"),
+            "phone" => $this->input->post("phone"),
+            "address" => $this->input->post("address"),
+            "medicareNo" => $this->input->post("medicareNo"),
+            );
+            $this->user_model->update_user($input);
+            $this->session->set_userdata('user', $this->user_model->get_user($user->userId));
+            redirect('/patient');
+        }
+        $this->my_smarty->assign('data', $data)->view('patient/edit-info');
+    }
+    
+    public function editApplication1($applicationId="")
+    {
+        $user = $this->session->userdata('user');
+        $data = array('applicationId'=>$applicationId);
+        $data['error_msgs'] = '';
+        $this->form_validation->set_rules('action', 'Action', 'required');
+        
+        if ($this->form_validation->run() === false) {
+            // default return
+            $data['error_msgs'] = validation_errors();
+        } else {
+            redirect('/patient/editApplication2/'.$applicationId);
+        }
+        $this->my_smarty->assign('data', $data)->view('patient/edit-application1');
+    }
+    
+    public function editApplication2($applicationId="")
+    {
+        $user = $this->session->userdata('user');
+        $data = array('applicationId'=>$applicationId);
+        $data['error_msgs'] = '';
+        
+        $this->form_validation->set_rules('doctorId', 'Doctor Id', 'trim|required');
+        $this->form_validation->set_rules('gp', 'GP', 'trim|required');
+        $this->form_validation->set_rules('gpAddress', 'Location of GP', 'trim|required');
+        $this->form_validation->set_rules('preferedDays', 'Prefered Days', 'trim|required');
+        $this->form_validation->set_rules('preferedTime', 'Prefered Time', 'trim|required');
+        
+        if ($this->form_validation->run() === false) {
+            // default return
+            $data['error_msgs'] = validation_errors();
+            if ($applicationId) {
+                $data['application'] = $this->application_model->get_application($applicationId);
+            } else {
+                $data['application'] = $this->application_model->create_empty_application();
+            }
+            $data['doctors'] = $this->user_model->get_all_doctors();
+        } else {
+            $action = $this->input->post('action');
+            $input = array(
+            "applicationId"=>$applicationId,
+            "patientId" => $user->userId,
+            "gp" => $this->input->post("gp"),
+            "gpAddress" => $this->input->post("gpAddress"),
+            "referal" => $this->input->post("referal"),
+            "documents" => $this->input->post("documents"),
+            "notes" => $this->input->post("notes"),
+            "doctorId" => $this->input->post("doctorId"),
+            "appointmentType" => $this->input->post("appointmentType"),
+            "appointmentTopics" => $this->input->post("appointmentTopics"),
+            "preferedDays" => $this->input->post("preferedDays"),
+            "preferedTime" => $this->input->post("preferedTime"),
+            "specialRequests" => $this->input->post("specialRequests"),
+            "status" => $action == 'submit' ? "Pending" : "Draft"
+            );
+            if ($applicationId) {
+                $this->application_model->update_application($input);
+                if ($action == 'continue') {
+                    redirect('/patient/editApplication3/'.$applicationId);
+                }
+                if ($action == 'save') {
+                    redirect('/patient/applications/');
+                }
+            } else {
+                $application = $this->application_model->create_application($input);
+                if ($action == 'continue') {
+                    redirect('/patient/editApplication3/'.$application->applicationId);
+                }
+                if ($action == 'save') {
+                    redirect('/patient/applications/');
+                }
+            }
+        }
+        $this->my_smarty->assign('data', $data)->view('patient/edit-application2');
+    }
+    
+    public function editApplication3($applicationId="")
+    {
+        $user = $this->session->userdata('user');
+        $data = array('applicationId' => $applicationId);
+        $application = $this->application_model->get_application($applicationId);
+        $application->doctor = $this->user_model->get_user($application->doctorId);
+        $data['error_msgs'] = '';
+        
+        $this->form_validation->set_rules('action', 'Action', 'required');
+        
+        if ($this->form_validation->run() === false) {
+            // default return
+            $data['error_msgs'] = validation_errors();
+            $data['application'] = $application;
+        } else {
+            $action = $this->input->post('action');
+            if ($action == 'save') {
+                redirect('/patient/applications/');
+            }
+            if ($action == 'submit') {
+                $this->application_model->update_application(array(
+                    "applicationId" => $applicationId,
+                    "status" => "Pending"
+                ));
+                redirect('/patient/applications/');
+            }
+        }
+        $this->my_smarty->assign('data', $data)->view('patient/edit-application3');
     }
 }

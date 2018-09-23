@@ -5,7 +5,7 @@
 */
 class Application_model extends CI_Model
 {
-    public $TABLE = "application";
+    public $TABLE = "Application";
     var $applicationId = '';
     var $gp =  '';
     var $gpAddress =  '';
@@ -13,12 +13,13 @@ class Application_model extends CI_Model
     var $notes = '';
     var $documents = '';
     var $appointmentType = '';
-    var $appintmentTopicc = '';
+    var $appointmentTopics = '';
     var $preferedDays = '';
     var $preferedTime = '';
     var $specialRequests = '';
     var $patiendId = '';
     var $doctorId = '';
+    var $submitted = '';
     
     public function get_all_applications($patiendId)
     {
@@ -47,9 +48,8 @@ class Application_model extends CI_Model
         // return $this->db->replace($this->TABLE, $application);
     }
     
-    public function create_empty_application($type) {
+    public function create_empty_application() {
         $application = new Application_model();
-        $application->type = $type;
         return $application;
     }
     

@@ -1,0 +1,212 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{site_url('/patients/applications')}">Applications</a></li>
+            {if $data.applicationId}
+            <li class="breadcrumb-item active">Edit Application</li>
+            {/if}
+            {if !$data.applicationId}
+            <li class="breadcrumb-item active">New Application</li>
+            {/if}
+        </ol>
+    </nav>
+
+    {if $data.applicationId}
+    <h3>Edit Application</h3>
+    {/if}
+    {if !$data.applicationId}
+    <h3>New Application</h3>
+    {/if}
+    <hr />
+
+    <form method="post">
+        <div class="row">
+            <div class="col-7">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-center">Review and submission</h3>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <dl>
+                                    <dt>Name</dt>
+                                    <dd>{$smarty.session.user->title} {$smarty.session.user->firstname}
+                                        {$smarty.session.user->lastname}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>Address</dt>
+                                    <dd>{$smarty.session.user->address}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>Birthday</dt>
+                                    <dd>{$smarty.session.user->dob}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <dl>
+                                    <dt>Email</dt>
+                                    <dd>{$smarty.session.user->email}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>Phone</dt>
+                                    <dd>{$smarty.session.user->phone}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>Gender</dt>
+                                    <dd>{$smarty.session.user->gender}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col">
+                                <dl>
+                                    <dt>Medicare Number</dt>
+                                    <dd>{$smarty.session.user->medicareNo}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>General Practitioner</dt>
+                                    <dd>{$data.application->gp}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>Location of GP</dt>
+                                    <dd>{$data.application->gpAddress}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Referal</dt>
+                                    <dd>{$data.application->referal}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Other Documents</dt>
+                                    <dd>{$data.application->documents}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Further Notes</dt>
+                                    <dd>{$data.application->notes}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Preferred Professional</dt>
+                                    <dd>{$data.application->doctor->title} {$data.application->doctor->firstname}
+                                        {$data.application->doctor->lastname}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Appointment Type</dt>
+                                    <dd>{$data.application->appointmentType}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Appointment Topics</dt>
+                                    <dd>{$data.application->appointmentTopics}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Preferred Days</dt>
+                                    <dd>{$data.application->preferedDays}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Preferred Time</dt>
+                                    <dd>{$data.application->preferedTime}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Speical Requests</dt>
+                                    <dd>{$data.application->specialRequests}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <ul class="list-group">
+                    <li class="list-group-item bg-dark text-white">
+                        <h5><b>Submission Progress</b></h5>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="mr-3">
+                            <i class="fas fa-check-circle text-success progress-icon"></i>
+                        </span>
+                        <b>Patient Details</b>
+                        {if $data.applicationId}
+                        <a href="{site_url('/patient/editApplication1/')}/{$data.applicationId}"><small>back</small></a>
+                        {/if}
+                        {if !$data.applicationId}
+                        <a href="{site_url('/patient/editApplication1/')}/"><small>back</small></a>
+                        {/if}
+                    </li>
+                    <li class="list-group-item list-group-item-secondary">
+                        <span class="mr-3">
+                            <i class="fas fa-check-circle text-success progress-icon"></i>
+                        </span>
+                        <b>Application Details</b>
+                        {if $data.applicationId}
+                        <a href="{site_url('/patient/editApplication2/')}/{$data.applicationId}"><small>back</small></a>
+                        {/if}
+                        {if !$data.applicationId}
+                        <a href="{site_url('/patient/editApplication2/')}/"><small>back</small></a>
+                        {/if}
+                    </li>
+                    <li class="list-group-item">
+                        <span class="mr-3">
+                            <i class="fas fa-check-circle text-success progress-icon"></i>
+                        </span>
+                        <b>Review and submit</b>
+                    </li>
+                </ul>
+                <br>
+                <button class="btn btn-lg btn-success btn-block mb-2" type="submit" name="action" value="save">Save & Exit</button>
+                <button class="btn btn-lg btn-primary btn-block mb-2" type="submit" name="action" value="submit">Submit Application</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+{/block}
