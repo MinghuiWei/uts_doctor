@@ -14,22 +14,11 @@ class User_model extends CI_Model
         return $result;
     }
 
-    public function create_user($user, $type="patient")
+    public function create_user($user)
     {
-        $this->db->insert($TABLE = "users", [
-            'firstname' => $user['firstname'],
-            'lastname' => $user['last_name'],
-            'email' => $user['email'],
-            'password' => $user['password'],
-            'title' => $user['title'],
-            'dob' => $user['dob'],
-            'gender' => $user['gender'],
-            'address' => $user['address'],
-            'medicareNo' => $user['medicareNo'],
-            'patient' => $type,
-        ]);
-        return $this->db->get_where($this->$TABLE,
-            ['id' => $this->db->insert_id()])->row();
+        var_dump($user);
+        $this->db->insert($this->TABLE, $user);
+        return $this->db->get_where($this->TABLE, array('userId' => $this->db->insert_id()))->row();
     }
 
     public function login_user($email, $password)
