@@ -1,0 +1,10 @@
+{extends file='layout.html'}
+{block name=body}
+<h3>{$blog_heading}</h3>
+
+{if isset($smarty.session.xx)}
+        {$smarty.session.xx}
+{/if}
+{$smarty.session.username}
+
+{/block}
