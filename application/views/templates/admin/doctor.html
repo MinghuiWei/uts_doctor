@@ -1,7 +1,7 @@
 {extends file='layout.html'}
 {block name=body}
 
-<div class="mt-3">
+<div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{site_url('/admin/doctors')}">Doctors</a></li>
@@ -16,6 +16,7 @@
     <h3>{$data.doctor->title}
         {$data.doctor->firstname}
         {$data.doctor->lastname}</h3>
+    <small class="badge badge-secondary text-sm text-capitalize">{$data.doctor->type}</small>
     <hr />
 
     <div class="card shadow">
@@ -49,7 +50,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-6">
+                    <dl>
+                        <dt>Birthday</dt>
+                        <dd>{$data.doctor->dob}</dd>
+                    </dl>
                 </div>
             </div>
             <dl>

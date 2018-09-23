@@ -19,6 +19,7 @@ class User_model extends CI_Model
     var $verification = '';
     var $specialty = '';
     var $medicareNo = '';
+    var $doctorId = '';
     
     public function get_all_doctors()
     {
@@ -59,21 +60,6 @@ class User_model extends CI_Model
         $user = new User_model();
         $user->type = $type;
         return $user;
-        // return array(
-        // 'firstname' => '',
-        // 'lastname' => '',
-        // 'gender' => 'Male',
-        // 'title' => 'Mr.',
-        // 'dob' => '',
-        // 'email' => '',
-        // 'phone' => '',
-        // 'password' => '',
-        // 'address' => '',
-        // 'type' => $type,
-        // 'verification' => '',
-        // 'specialty' => '',
-        // 'medicareNo' => ''
-        // );
     }
     
     public function login_user($email, $password)
