@@ -1,0 +1,70 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    {if scheduleId}
+    <h3>Edit Schedule</h3>
+    {/if}
+    {if !ischeduleId}
+    <h3>Create Schedule</h3>
+    {/if}
+    <hr />
+
+    <form method="post">
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-center">Schedule Details</h3>
+
+                        {if $data.error_msgs}
+                        <div class="alert alert-danger">{$data.error_msgs}</div>
+                        {/if}
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <input type="date" name="day" class="form-control" value="{$data.schedule->day}" required>
+                                    <!-- <select class="form-control" name="day" required>
+                                        {foreach from=$data.day_option item=day}
+                                        <option value="{$day}" {if $data.schedule->day == $day}selected{/if}>{$day}</option>
+                                        {/foreach}
+                                    </select> -->
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Start Time</label>
+                                    <select class="form-control" name="startTime" required>
+                                        {foreach from=$data.time_option item=day}
+                                        <option value="{$day}" {if $data.schedule->startTime == $day}selected{/if}>{$day}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>End Time</label>
+                                    <select class="form-control" name="endTime" required>
+                                        {foreach from=$data.time_option item=day}
+                                        <option value="{$day}" {if $data.schedule->endTime == $day}selected{/if}>{$day}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-lg btn-primary btn-block mb-2" type="submit" name="action" value="continue">
+                            Save</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+
+{/block}

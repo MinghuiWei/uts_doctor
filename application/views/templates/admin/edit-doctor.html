@@ -5,21 +5,21 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{site_url('/admin/doctors')}">Doctors</a></li>
-            {if isset($smarty.get.userId)}
+            {if $data.userId}
             <li class="breadcrumb-item active">{$data.doctor->title}
                 {$data.doctor->firstname}
                 {$data.doctor->lastname}</li>
             {/if}
-            {if !isset($smarty.get.userId)}
+            {if !$data.userId}
             <li class="breadcrumb-item active">Add doctor</li>
             {/if}
         </ol>
     </nav>
 
-    {if isset($smarty.get.userId)}
+    {if $data.userId}
     <h3>Edit doctor</h3>
     {/if}
-    {if !isset($smarty.get.userId)}
+    {if !$data.userId}
     <h3>Add doctor</h3>
     {/if}
     <hr />

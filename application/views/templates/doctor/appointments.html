@@ -1,0 +1,47 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Applications</li>
+        </ol>
+    </nav>
+
+    <a class="btn btn-success float-right" href="{site_url('/patient/editApplication1')}">Create new application</a>
+    <h3>All Applications</h3>
+    <hr />
+
+    <table class="table table-bordered table-striped bg-white data-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Doctor</th>
+                <th>Patient</th>
+                <th>Submitted</th>
+                <th>Status</th>
+                <th>Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach from=$data.applications item=application name=foo}
+            <tr>
+                <!-- <td>{$smarty.foreach.foo.index + 1}</td> -->
+                <td>{$application->applicationId}</td>
+                <td>{$smarty.session.user->title} {$smarty.session.user->firstname} {$smarty.session.user->lastname}</td>
+                <td>{$application->patient->title} {$application->patient->firstname} {$application->patient->lastname}</td>
+                <td>{$application->submitted}</td>
+                <td>{$application->status}</td>
+                <td>
+                    {if $application->status == 'Draft'}
+                    <a class="btn btn-secondary btn-sm" href="{site_url('/patient/editApplication1/')}{$application->applicationId}">Edit</a>
+                    <a class="btn btn-danger btn-sm btn-confirm" href="{site_url('/patient/deleteApplication/')}{$application->applicationId}">Delete</a>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>
+
+{/block}

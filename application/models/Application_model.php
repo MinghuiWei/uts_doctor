@@ -28,6 +28,14 @@ class Application_model extends CI_Model
         return $result;
     }
     
+    public function get_all_doctor_applications($doctorId)
+    {
+        $query = $this->db->get_where($this->TABLE, array('doctorId' => $doctorId));
+        $result = $query->result();
+        return $result;
+    }
+    
+
     public function get_application($applicationId)
     {
         $query = $this->db->get_where($this->TABLE, array('applicationId' => $applicationId));

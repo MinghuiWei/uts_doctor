@@ -1,0 +1,42 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Schedules</li>
+        </ol>
+    </nav>
+
+    <a class="btn btn-success float-right" href="{site_url('/doctor/editSchedule')}">Create new schedule</a>
+    <h3>All Schedules</h3>
+    <hr />
+
+    <table class="table table-bordered table-striped bg-white data-table">
+        <thead>
+            <tr>
+                <!-- <th>#</th> -->
+                <th>Doctor</th>
+                <th>Day</th>
+                <th>time</th>
+                <th>Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach from=$data.schedules item=schedule name=foo}
+            <tr>
+                <!-- <td>{$schedule->scheduleId}</td> -->
+                <td>{$smarty.session.user->title} {$smarty.session.user->firstname} {$smarty.session.user->lastname}</td>
+                <td>{$schedule->day}</td>
+                <td>{$schedule->startTime} - {$schedule->endTime}</td>
+                <td>
+                    <a class="btn btn-secondary btn-sm" href="{site_url('/doctor/editSchedule/')}{$schedule->scheduleId}">Edit</a>
+                    <a class="btn btn-danger btn-sm btn-confirm" href="{site_url('/doctor/deleteSchedule/')}{$schedule->scheduleId}">Delete</a>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>
+
+{/block}

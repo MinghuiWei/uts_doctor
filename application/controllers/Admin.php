@@ -26,7 +26,7 @@ class Admin extends CI_Controller {
     
     public function editDoctor($userId = '')
     {
-        $data = array();
+        $data = array('userId' => $userId);
         $data['error_msgs'] = '';
         
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
@@ -102,7 +102,7 @@ class Admin extends CI_Controller {
     
     public function editSecretary($userId = '')
     {
-        $data = array();
+        $data = array('userId' => $userId);
         $data['error_msgs'] = '';
         
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
