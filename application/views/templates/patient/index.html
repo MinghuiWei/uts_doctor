@@ -1,0 +1,45 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <h3 class="text-center">Welcome {$smarty.session.user->title} {$smarty.session.user->firstname}
+        {$smarty.session.user->lastname}</h3>
+    <hr />
+
+    <h4>Current Applications</h4>
+    <div class="card p-5">
+        <div class="p-5 text-center">
+            <h3>Application Status: <i>Pending</i></h3>
+        </div>
+    </div>
+
+    <br>
+
+    <h4>Quick menu</h4>
+    <div class="row">
+        <div class="col">
+            <div class="card text-center">
+                <div class="py-5 px-3">
+                    <h3><a href="{site_url('/patient/appointments')}">Create a new application</a></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center">
+                <div class="py-5 px-3">
+                    <h3><a href="{site_url('/patient/info')}">Edit Personal Information</a></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center">
+                <div class="py-5 px-3">
+                    <h3><a href="{site_url('/patient/appointments')}">My appointment</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{/block}

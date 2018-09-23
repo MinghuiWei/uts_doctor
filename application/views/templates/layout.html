@@ -36,7 +36,15 @@
     </style>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
+            $('.btn-confirm').click(function (e) {
+                e.preventDefault();
+                var a = $(e.currentTarget);
+                if (confirm("Are your sure?")) {
+                    location.assign(a.attr('href'));
+                }
+            });
+
             $('.data-table').DataTable();
         });
     </script>

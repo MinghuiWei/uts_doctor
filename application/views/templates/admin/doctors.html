@@ -29,7 +29,10 @@
                 <td>{$user->email}</td>
                 <td>{$user->phone}</td>
                 <td>{$user->gender}</td>
-                <td><a class="btn btn-primary btn-sm btn-block" href="{site_url('/admin/doctor/')}{$user->userId}">Detail</a></td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="{site_url('/admin/doctor/')}{$user->userId}">Detail</a>
+                    <a class="btn btn-danger btn-sm btn-confirm" href="{site_url('/admin/deleteDoctor/')}{$user->userId}">Delete</a>
+                </td>
             </tr>
             {/foreach}
         </tbody>

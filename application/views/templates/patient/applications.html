@@ -1,0 +1,42 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Applications</li>
+        </ol>
+    </nav>
+
+    <a class="btn btn-success float-right" href="{site_url('/patient/editApplication')}">Create new application</a>
+    <h3>All Applications</h3>
+    <hr />
+
+    <table class="table table-bordered table-striped bg-white data-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Doctor</th>
+                <th>Submitted</th>
+                <th>Status</th>
+                <th>Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach from=$data.applications item=application name=foo}
+            <tr>
+                <td>{$smarty.foreach.foo.index + 1}</td>
+                <td>{$smarty.session.user->title} {$smarty.session.user->firstname} {$smarty.session.user->lastname}</td>
+                <td>{$application->doctor->title} {$application->doctor->firstname} {$application->doctor->lastname}</td>
+                <td>{$application->submitted}</td>
+                <td>{$application->status}</td>
+                <td><a class="btn btn-secondary" href="{site_url('/patient/editApplication/')}{$application->applicationId}">Edit</a>
+                    <a class="btn btn-danger btn-confirm" href="{site_url('/patient/deleteApplication/')}{$application->applicationId}">Delete</a></td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>
+
+{/block}

@@ -99,7 +99,7 @@ class Admin extends CI_Controller {
         );
         $this->my_smarty->assign('data', $data)->view('admin/secretary');
     }
-
+    
     public function editSecretary($userId = '')
     {
         $data = array();
@@ -145,5 +145,15 @@ class Admin extends CI_Controller {
             }
         }
         $this->my_smarty->assign('data', $data)->view('admin/edit-secretary');
+    }
+    
+    public function deleteDoctor($userId) {
+        $this->user_model->delete($userId);
+        redirect('/admin/doctors/');
+    }
+    
+    public function deleteSecretary($userId) {
+        $this->user_model->delete($userId);
+        redirect('/admin/secretaries/');
     }
 }

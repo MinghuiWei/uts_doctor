@@ -47,14 +47,14 @@ class User_model extends CI_Model
         $this->db->insert($this->TABLE, $user);
         return $this->db->get_where($this->TABLE, array('userId' => $this->db->insert_id()))->row();
     }
-
+    
     public function update_user($user)
     {
         $this->db->where('userId', $user['userId']);
         $this->db->update($this->TABLE, $user);
-        // return $this->db->replace($this->TABLE, $user);            
+        // return $this->db->replace($this->TABLE, $user);
     }
-
+    
     
     public function create_empty_user($type) {
         $user = new User_model();
@@ -72,4 +72,9 @@ class User_model extends CI_Model
         
         return $user;
     }
+    
+    public function delete($userId) {
+        $this->db->delete($this->TABLE, array('userId' => $userId));
+    }
+    
 }
