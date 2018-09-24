@@ -10,6 +10,16 @@ class Doctor extends CI_Controller {
         $this->load->model('appointment_model');
         $this->load->model('schedule_model');
         
+        $config = array(
+        'protocol' => 'smtp',
+        'smtp_host' => 'ssl://smtp.googlemail.com',
+        'smtp_port' => 465,
+        'smtp_user' => 'uts.hosipital.system@gmail.com',
+        'smtp_pass' => 'Uts12345',
+        'newline' => "\r\n",
+        );
+        $this->load->library('email', $config);
+        
         if ( !$this->session->userdata('user') || $this->session->userdata('user')->type != 'doctor')
         {
             redirect('/home/login');
@@ -41,11 +51,11 @@ class Doctor extends CI_Controller {
     public function schedules() {
         $user = $this->session->userdata('user');
         $schedules = $this->schedule_model->get_all_schedules($user->userId);
-
+        
         $data = array('schedules' => $schedules);
         $this->my_smarty->assign('data', $data)->view('doctor/schedules');
     }
-
+    
     public function deleteSchedule($applicationId)
     {
         $this->schedule_model->delete($applicationId);
@@ -66,16 +76,16 @@ class Doctor extends CI_Controller {
             }
         }
         $data = array(
-            'scheduleId' => $scheduleId,
-            'day_option' => array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
-            'time_option' => $time_option
+        'scheduleId' => $scheduleId,
+        'day_option' => array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
+        'time_option' => $time_option
         );
         $data['error_msgs'] = '';
-
+        
         $this->form_validation->set_rules('day', 'Day', 'trim|required');
         $this->form_validation->set_rules('startTime', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('endTime', 'End Time', 'trim|required');
-
+        
         if ($this->form_validation->run() === false) {
             // default return
             $data['error_msgs'] = validation_errors();
@@ -86,11 +96,11 @@ class Doctor extends CI_Controller {
             }
         } else {
             $input = array(
-                "scheduleId" => $scheduleId,
-                "day" => $this->input->post("day"),
-                "startTime" => $this->input->post("startTime"),
-                "endTime" => $this->input->post("endTime"),
-                "doctorId" => $user->userId,
+            "scheduleId" => $scheduleId,
+            "day" => $this->input->post("day"),
+            "startTime" => $this->input->post("startTime"),
+            "endTime" => $this->input->post("endTime"),
+            "doctorId" => $user->userId,
             );
             if ($scheduleId) {
                 $this->schedule_model->update_schedule($input);
@@ -111,6 +121,14 @@ class Doctor extends CI_Controller {
         'status' => 'Cancelled'
         );
         $this->appointment_model->update_appointment($input);
+
+        $patient = $this->user_model->get_user($appointment->patientId);
+        $this->email->from('uts.hosipital.system@gmail.com');
+        $this->email->to($patient->email);
+        $this->email->subject('Your appointment has been cancelled');
+        $this->email->message('Dear '. $patient->title . ' ' . $patient->firstname . ' ' . $patient->lastname . ', your appointment #' . $appointmentId . ' has been approved. please login to see more deail');
+        $this->email->send();
+
         redirect('/doctor/appointments');
     }
     

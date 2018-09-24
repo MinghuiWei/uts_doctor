@@ -10,6 +10,16 @@ class Secretary extends CI_Controller {
         $this->load->model('appointment_model');
         $this->load->model('schedule_model');
         
+        $config = array(
+        'protocol' => 'smtp',
+        'smtp_host' => 'ssl://smtp.googlemail.com',
+        'smtp_port' => 465,
+        'smtp_user' => 'uts.hosipital.system@gmail.com',
+        'smtp_pass' => 'Uts12345',
+        'newline' => "\r\n",
+        );
+        $this->load->library('email', $config);
+        
         if ( !$this->session->userdata('user') || $this->session->userdata('user')->type != 'secretary')
         {
             redirect('/home/login');
@@ -91,7 +101,7 @@ class Secretary extends CI_Controller {
         $application->patient = $this->user_model->get_user($application->patientId);
         $application->doctor = $this->user_model->get_user($application->doctorId);
         $application->appointment = $this->appointment_model->get_appointment_by_application_id($applicationId);
-
+        
         if ($this->form_validation->run() === false) {
             $data['application'] = $application;
             $data['doctor'] = $application->doctor;
@@ -112,10 +122,17 @@ class Secretary extends CI_Controller {
                 
                 $input = array(
                 "applicationId" => $applicationId,
-                "status" => "Arranged"
+                "status" => "Approved"
                 );
                 $this->application_model->update_application($input);
                 
+                $this->email->from('uts.hosipital.system@gmail.com');
+                $this->email->to($application->patient->email);
+                $this->email->subject('Your application has been updated');
+                $this->email->message('Dear '. $application->patient->title . ' ' . $application->patient->firstname . ' ' . $application->patient->lastname . ', your application #' . $application->applicationId . ' has been updated. please login to see more deail');
+                $this->email->send();
+                // echo $this->email->print_debugger();
+
                 redirect('/secretary/appointments/'.$application->doctorId);
             }
             if ($action == 'reject') {
@@ -125,7 +142,15 @@ class Secretary extends CI_Controller {
                 "status" => "Rejected"
                 );
                 $this->application_model->update_application($input);
-                redirect('/secretary/appointments/'.$application->doctorId);
+                
+                $this->email->from('uts.hosipital.system@gmail.com');
+                $this->email->to($application->patient->email);
+                $this->email->subject('Your application has been rejected');
+                $this->email->message('Dear '. $application->patient->title . ' ' . $application->patient->firstname . ' ' . $application->patient->lastname . ', your application #' . $application->applicationId . ' has been rejeccetd. please login to see more deail');
+                $this->email->send();
+                // echo $this->email->print_debugger();
+                
+                redirect('/secretary/applications/'.$application->doctorId);
             }
         }
     }
@@ -138,6 +163,14 @@ class Secretary extends CI_Controller {
         'status' => 'Cancelled'
         );
         $this->appointment_model->update_appointment($input);
+
+        $patient = $this->user_model->get_user($appointment->patientId);
+        $this->email->from('uts.hosipital.system@gmail.com');
+        $this->email->to($patient->email);
+        $this->email->subject('Your appointment has been cancelled');
+        $this->email->message('Dear '. $patient->title . ' ' . $patient->firstname . ' ' . $patient->lastname . ', your appointment #' . $appointmentId . ' has been approved. please login to see more deail');
+        $this->email->send();
+
         redirect('/secretary/appointments/'.$appointment->doctorId);
     }
     
