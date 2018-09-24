@@ -20,6 +20,7 @@
                 <th>Doctor</th>
                 <th>Submitted</th>
                 <th>Status</th>
+                <th>Reason</th>
                 <th>Manage</th>
             </tr>
         </thead>
@@ -32,6 +33,7 @@
                 <td>{$application->doctor->title} {$application->doctor->firstname} {$application->doctor->lastname}</td>
                 <td>{$application->submitted}</td>
                 <td>{$application->status}</td>
+                <td>{$application->reason}</td>
                 <td>
                     {if $application->status == 'Draft'}
                     <a class="btn btn-secondary btn-sm" href="{site_url('/patient/editApplication1/')}{$application->applicationId}">Edit</a>

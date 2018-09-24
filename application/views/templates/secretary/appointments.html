@@ -1,0 +1,47 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Appointments</li>
+        </ol>
+    </nav>
+
+    <a class="btn btn-success float-right" href="{site_url('/patient/editApplication1')}">Create new appointment</a>
+    <h3>All Appointments</h3>
+    <hr />
+
+    <table class="table table-bordered table-striped bg-white data-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Doctor</th>
+                <th>Patient</th>
+                <th>Submitted</th>
+                <th>Status</th>
+                <th>Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach from=$data.appointments item=appointment name=foo}
+            <tr>
+                <!-- <td>{$smarty.foreach.foo.index + 1}</td> -->
+                <td>{$appointment->appointmentId}</td>
+                <td>{$smarty.session.user->title} {$smarty.session.user->firstname} {$smarty.session.user->lastname}</td>
+                <td>{$appointment->patient->title} {$appointment->patient->firstname} {$appointment->patient->lastname}</td>
+                <td>{$appointment->submitted}</td>
+                <td>{$appointment->status}</td>
+                <td>
+                    {if $appointment->status == 'Draft'}
+                    <a class="btn btn-secondary btn-sm" href="{site_url('/patient/editApplication1/')}{$appointment->appointmentId}">Edit</a>
+                    <a class="btn btn-danger btn-sm btn-confirm" href="{site_url('/patient/deleteApplication/')}{$appointment->appointmentId}">Delete</a>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>
+
+{/block}

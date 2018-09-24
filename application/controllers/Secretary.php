@@ -33,17 +33,22 @@ class Secretary extends CI_Controller {
         $this->my_smarty->assign('data', $data)->view('secretary/applications');
     }
     
-    // public function appointments()
-    // {
-    //     $user = $this->session->userdata('user');
-    //     $applications = $this->application_model->get_all_doctor_applications($user->doctorId);
-    //     foreach($applications as $index => $application) {
-    //         $applications[$index]->patient = $this->user_model->get_user($application->patientId);
-    //         $applications[$index]->doctor = $this->user_model->get_user($application->doctorId);
-    //     }
-    //     $data = array('applications' => $applications);
-    //     $this->my_smarty->assign('data', $data)->view('secretary/appointments');
-    // }
+    public function appointments()
+    {
+        $user = $this->session->userdata('user');
+        $data = array();
+        $appointments = $this->appointment_model->get_all_doctor_appointments($user->doctorId);
+        foreach($appointments as $index => $appointment) {
+            $application = $this->application_model->get_application($appointment->applicationId);
+            $appointments[$index]->application = $application;
+            $appointments[$index]->patient = $this->user_model->get_user($application->patientId);
+            $appointments[$index]->doctor = $this->user_model->get_user($application->doctorId);
+            $appointments[$index]->application->patient = $appointments[$index]->patient;
+            $appointments[$index]->application->doctor = $appointments[$index]->doctor;
+        }
+        $data = array('appointments' => $appointments);
+        $this->my_smarty->assign('data', $data)->view('secretary/appointments');
+    }
     
     public function schedules() {
         $user = $this->session->userdata('user');
@@ -55,21 +60,69 @@ class Secretary extends CI_Controller {
 
     public function application($applicationId)
     {
+        $user = $this->session->userdata('user');
         $time_option = array();
         for ($i = 8; $i <= 17; $i++) {
             array_push($time_option, "$i".":00");
             array_push($time_option, "$i".":30");
         }
+        $data = array(
+            'error_msgs' => '',
+            'time_option' => $time_option
+        );
 
-        $user = $this->session->userdata('user');
+        $action = $this->input->post("action");
+
+        $this->form_validation->set_rules('action', 'Action', 'trim|required');
+        if ($action == 'create') {
+            $this->form_validation->set_rules('date', 'Date', 'trim|required');
+            $this->form_validation->set_rules('startTime', 'Start Time', 'trim|required');
+            $this->form_validation->set_rules('endTime', 'End Time', 'trim|required');
+        }
+        if ($action == 'reject') {
+            $this->form_validation->set_rules('reason', 'Reason', 'trim|required');
+        }
+
         $application = $this->application_model->get_application($applicationId);
         $application->patient = $this->user_model->get_user($application->patientId);
         $application->doctor = $this->user_model->get_user($application->doctorId);
-        $data = array(
-            'application' => $application,
-            'time_option'=> $time_option
-        );
-        $this->my_smarty->assign('data', $data)->view('secretary/application');
+
+        if ($this->form_validation->run() === false) {
+            $data['application'] = $application;
+            $this->my_smarty->assign('data', $data)->view('secretary/application');
+        } else {
+            if ($action == 'create') {
+                $input = array(
+                    "secretaryId" => $user->userId,
+                    "date" => $this->input->post("date"),
+                    "startTime" => $this->input->post("startTime"),
+                    "endTime" => $this->input->post("endTime"),
+                    "applicationId" => $applicationId,
+                    "patientId" => $application->patientId,
+                    "doctorId" => $application->doctorId,
+                    "status" => "Confirmed"
+                );
+                $this->appointment_model->create_appointment($input);
+
+                $input = array(
+                    "applicationId" => $applicationId,
+                    "status" => "Approved"
+                );
+                $this->application_model->update_application($input);
+
+                redirect('/secretary/appointments');
+            }
+            if ($action == 'reject') {
+                $input = array(
+                    "applicationId" => $applicationId,
+                    "reason" => $this->input->post("reason"),
+                    "status" => "Rejected"
+                );
+                $this->application_model->update_application($input);
+                redirect('/secretary/applications');
+            }
+
+        }
     }
 
     // public function editSchedule($scheduleId = "")
