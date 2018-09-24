@@ -1,0 +1,36 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Schedules</li>
+        </ol>
+    </nav>
+
+    <h3>All Schedules for <i>{$data.doctor->title} {$data.doctor->firstname} {$data.doctor->lastname}</i></h3>
+    <hr />
+
+    <table class="table table-bordered table-striped bg-white data-table">
+        <thead>
+            <tr>
+                <!-- <th>#</th> -->
+                <th>Doctor</th>
+                <th>Day</th>
+                <th>time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach from=$data.schedules item=schedule name=foo}
+            <tr>
+                <!-- <td>{$schedule->scheduleId}</td> -->
+                <td>{$data.doctor->title} {$data.doctor->firstname} {$data.doctor->lastname}</td>
+                <td>{$schedule->day}</td>
+                <td>{$schedule->startTime} - {$schedule->endTime}</td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>
+
+{/block}

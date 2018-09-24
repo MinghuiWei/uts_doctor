@@ -21,16 +21,19 @@ class Application_model extends CI_Model
     var $doctorId = '';
     var $submitted = '';
     
-    public function get_all_applications($patiendId)
+    public function get_all_applications($patientId)
     {
-        $query = $this->db->get_where($this->TABLE, array('patientId' => $patiendId));
+        $query = $this->db->get_where($this->TABLE, array('patientId' => $patientId));
         $result = $query->result();
         return $result;
     }
     
     public function get_all_doctor_applications($doctorId)
     {
-        $query = $this->db->get_where($this->TABLE, array('doctorId' => $doctorId));
+        $this->db->from($this->TABLE);
+        $this->db->where('doctorId', $doctorId);
+        $this->db->where('status !=', 'Draft');
+        $query = $this->db->get();
         $result = $query->result();
         return $result;
     }

@@ -123,6 +123,7 @@ class Patient extends CI_Controller {
             "preferedDays" => $this->input->post("preferedDays"),
             "preferedTime" => $this->input->post("preferedTime"),
             "specialRequests" => $this->input->post("specialRequests"),
+            "submitted" =>$action == 'submit' ? date('Y-m-d') : NULL,
             "status" => $action == 'submit' ? "Pending" : "Draft"
             );
             if ($applicationId) {
@@ -168,7 +169,8 @@ class Patient extends CI_Controller {
             if ($action == 'submit') {
                 $this->application_model->update_application(array(
                     "applicationId" => $applicationId,
-                    "status" => "Pending"
+                    "status" => "Pending",
+                    "submitted" => date("Y-m-d")
                 ));
                 redirect('/patient/applications/');
             }

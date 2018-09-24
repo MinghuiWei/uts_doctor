@@ -130,6 +130,34 @@
                     </li>
                     {/if}
 
+                    <!-- Secretary Menu -->
+                    {if $smarty.session.user->type == 'secretary'}
+                    <li class="list-group-item">
+                        <a class="text-white" href="{site_url('/secretary/applications')}">
+                            <i class="fas fa-file-invoice mr-2"></i>
+                            Applications&nbsp;
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="text-white" href="{site_url('/secretary/appointments')}">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            Appointments&nbsp;
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="text-white" href="{site_url('/secretary/schedules')}">
+                            <i class="fas fa-clock mr-2"></i>
+                            Doctor Schedules&nbsp;
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="text-white" href="{site_url('/home/logout')}">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Logout&nbsp;
+                        </a>
+                    </li>
+                    {/if}
+
                     <!-- Admin Menu -->
                     {if $smarty.session.user->type == 'admin'}
                     <li class="list-group-item">
