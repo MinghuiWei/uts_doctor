@@ -36,6 +36,9 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('dob', 'Birthday', 'required');
         $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[10]|numeric');
+        if ($userId) {
+            $this->form_validation->set_rules('password', 'Passwrod', 'trim|required|min_length[4]|max_length[20]');
+        }
         
         if ($this->form_validation->run() === false) {
             // default return
@@ -64,6 +67,7 @@ class Admin extends CI_Controller {
                 $this->user_model->update_user($input);
                 redirect('/admin/doctor/'.$userId);
             } else {
+                $input['password'] = $this->input->post("password");
                 $user = $this->user_model->create_user($input);
                 redirect('/admin/doctor/'.$user->userId);
             }
@@ -112,7 +116,10 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('dob', 'Birthday', 'required');
         $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[10]|numeric');
-        
+        if ($userId) {
+            $this->form_validation->set_rules('password', 'Passwrod', 'trim|required|min_length[4]|max_length[20]');
+        }
+
         if ($this->form_validation->run() === false) {
             // default return
             $data['error_msgs'] = validation_errors();
@@ -140,6 +147,7 @@ class Admin extends CI_Controller {
                 $this->user_model->update_user($input);
                 redirect('/admin/secretary/'.$userId);
             } else {
+                $input['password'] = $this->input->post("password");
                 $user = $this->user_model->create_user($input);
                 redirect('/admin/secretary/'.$user->userId);
             }

@@ -38,6 +38,15 @@
                                 required>
                         </div>
                     </div>
+                    {if !$data.userId}
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" value="{$data.doctor->password}"
+                                required>
+                        </div>
+                    </div>
+                    {/if}
                 </div>
 
                 <div class="row">
