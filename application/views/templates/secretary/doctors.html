@@ -1,0 +1,43 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Doctors</li>
+        </ol>
+    </nav>
+
+    <h3>All Doctors</h3>
+    <hr />
+
+    <table class="table table-bordered table-striped bg-white data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Gender</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach from=$data.doctors item=user}
+            <tr>
+                <td>{$user->title} {$user->firstname} {$user->lastname}</td>
+                <td>{$user->email}</td>
+                <td>{$user->phone}</td>
+                <td>{$user->gender}</td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" href="{site_url('/secretary/doctor/')}{$user->userId}">Detail</a>
+                    <a class="btn btn-primary btn-sm" href="{site_url('/secretary/applications')}/{$user->userId}">Applications</a>
+                    <a class="btn btn-info btn-sm" href="{site_url('/secretary/appointments/')}{$user->userId}">Appointments</a>
+                    <a class="btn btn-secondary btn-sm" href="{site_url('/secretary/schedules/')}{$user->userId}">Schedules</a>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>
+
+{/block}

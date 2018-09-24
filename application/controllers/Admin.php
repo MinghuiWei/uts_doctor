@@ -133,7 +133,7 @@ class Admin extends CI_Controller {
             "dob" => $this->input->post("dob"),
             "phone" => $this->input->post("phone"),
             "address" => $this->input->post("address"),
-            "doctorId" => $this->input->post("doctorId"),
+            // "doctorId" => $this->input->post("doctorId"),
             "type" => "secretary"
             );
             if ($userId) {

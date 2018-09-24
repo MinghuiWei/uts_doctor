@@ -35,6 +35,7 @@
                 <td>{$application->status}</td>
                 <td>{$application->reason}</td>
                 <td>
+                    <a class="btn btn-outline-primary btn-sm" href="{site_url('/patient/application/')}{$application->applicationId}">View</a>
                     {if $application->status == 'Draft'}
                     <a class="btn btn-secondary btn-sm" href="{site_url('/patient/editApplication1/')}{$application->applicationId}">Edit</a>
                     <a class="btn btn-danger btn-sm btn-confirm" href="{site_url('/patient/deleteApplication/')}{$application->applicationId}">Delete</a>

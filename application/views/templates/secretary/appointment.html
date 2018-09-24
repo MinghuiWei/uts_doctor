@@ -4,7 +4,10 @@
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{site_url('/secretary/appointments')}">Appointments</a></li>
+            <li class="breadcrumb-item "><a href="{site_url('/secretary/doctors')}">Doctors</a></li>
+            <li class="breadcrumb-item "><a href="{site_url('/secretary/doctor')}/{$data.doctor->userId}">{$data.doctor->title}
+                    {$data.doctor->firstname} {$data.doctor->lastname}</a></li>
+            <li class="breadcrumb-item"><a href="{site_url('/secretary/appointments')}/{$data.doctor->userId}">Appointments</a></li>
             <li class="breadcrumb-item active">View Appointment</li>
         </ol>
     </nav>
@@ -196,9 +199,10 @@
                                 </div>
                                 <button class="btn btn-primary btn-block" type="submit" name="action" value="create">Update
                                     Appointment</button>
-                                
+
                                 {if $data.appointment->status == 'Confirmed'}
-                                <a class="btn btn-danger btn-confirm btn-block mt-3" href="{site_url('/secretary/cancelAppointment/')}{$data.appointment->appointmentId}">Cancel Appointment</a>
+                                <a class="btn btn-danger btn-confirm btn-block mt-3" href="{site_url('/secretary/cancelAppointment/')}{$data.appointment->appointmentId}">Cancel
+                                    Appointment</a>
                                 {/if}
                                 {/if}
                             </form>

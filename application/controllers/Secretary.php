@@ -18,14 +18,14 @@ class Secretary extends CI_Controller {
     
     public function index()
     {
-        redirect('/secretary/applications');
+        redirect('/secretary/doctors');
     }
     
-    public function applications()
+    public function applications($doctorId="")
     {
-        $user = $this->session->userdata('user');
-        $data = array('doctor' => $this->user_model->get_user($user->doctorId));
-        $applications = $this->application_model->get_all_doctor_applications($user->doctorId);
+        $user = $this->user_model->get_user($doctorId);
+        $data = array('doctor' => $user);
+        $applications = $this->application_model->get_all_doctor_applications($doctorId);
         foreach($applications as $index => $application) {
             $applications[$index]->patient = $this->user_model->get_user($application->patientId);
             $applications[$index]->doctor = $this->user_model->get_user($application->doctorId);
@@ -34,11 +34,11 @@ class Secretary extends CI_Controller {
         $this->my_smarty->assign('data', $data)->view('secretary/applications');
     }
     
-    public function appointments()
+    public function appointments($doctorId="")
     {
-        $user = $this->session->userdata('user');
-        $data = array('doctor' => $this->user_model->get_user($user->doctorId));
-        $appointments = $this->appointment_model->get_all_doctor_appointments($user->doctorId);
+        $user = $this->user_model->get_user($doctorId);
+        $data = array('doctor' => $user);
+        $appointments = $this->appointment_model->get_all_doctor_appointments($doctorId);
         foreach($appointments as $index => $appointment) {
             $application = $this->application_model->get_application($appointment->applicationId);
             $appointments[$index]->application = $application;
@@ -51,11 +51,10 @@ class Secretary extends CI_Controller {
         $this->my_smarty->assign('data', $data)->view('secretary/appointments');
     }
     
-    public function schedules() {
-        $user = $this->session->userdata('user');
-        $schedules = $this->schedule_model->get_all_schedules($user->doctorId);
-        
-        $data = array('schedules' => $schedules, 'doctor' => $this->user_model->get_user($user->doctorId));
+    public function schedules($doctorId) {
+        $user = $this->user_model->get_user($doctorId);
+        $schedules = $this->schedule_model->get_all_schedules($doctorId);
+        $data = array('schedules' => $schedules, 'doctor' => $user);
         $this->my_smarty->assign('data', $data)->view('secretary/schedules');
     }
     
@@ -91,9 +90,11 @@ class Secretary extends CI_Controller {
         $application = $this->application_model->get_application($applicationId);
         $application->patient = $this->user_model->get_user($application->patientId);
         $application->doctor = $this->user_model->get_user($application->doctorId);
-        
+        $application->appointment = $this->appointment_model->get_appointment_by_application_id($applicationId);
+
         if ($this->form_validation->run() === false) {
             $data['application'] = $application;
+            $data['doctor'] = $application->doctor;
             $this->my_smarty->assign('data', $data)->view('secretary/application');
         } else {
             if ($action == 'create') {
@@ -115,7 +116,7 @@ class Secretary extends CI_Controller {
                 );
                 $this->application_model->update_application($input);
                 
-                redirect('/secretary/appointments');
+                redirect('/secretary/appointments/'.$application->doctorId);
             }
             if ($action == 'reject') {
                 $input = array(
@@ -124,9 +125,8 @@ class Secretary extends CI_Controller {
                 "status" => "Rejected"
                 );
                 $this->application_model->update_application($input);
-                redirect('/secretary/applications');
+                redirect('/secretary/appointments/'.$application->doctorId);
             }
-            
         }
     }
     
@@ -138,7 +138,7 @@ class Secretary extends CI_Controller {
         'status' => 'Cancelled'
         );
         $this->appointment_model->update_appointment($input);
-        redirect('/secretary/appointments');
+        redirect('/secretary/appointments/'.$appointment->doctorId);
     }
     
     public function appointment($appointmentId)
@@ -177,6 +177,7 @@ class Secretary extends CI_Controller {
         if ($this->form_validation->run() === false) {
             $data['application'] = $application;
             $data['appointment'] = $appointment;
+            $data['doctor'] = $appointment->doctor;
             $this->my_smarty->assign('data', $data)->view('secretary/appointment');
         } else {
             $input = array(
@@ -194,7 +195,22 @@ class Secretary extends CI_Controller {
             );
             $this->application_model->update_application($input);
             
-            redirect('/secretary/appointments');
+            redirect('/secretary/appointments/'.$appointment->doctorId);
         }
     }
+    
+    public function doctors()
+    {
+        $data = array('doctors' => $this->user_model->get_all_doctors());
+        $this->my_smarty->assign('data', $data)->view('secretary/doctors');
+    }
+    
+    public function doctor($doctorId)
+    {
+        $data = array(
+        'doctor' => $this->user_model->get_user($doctorId)
+        );
+        $this->my_smarty->assign('data', $data)->view('secretary/doctor');
+    }
+    
 }

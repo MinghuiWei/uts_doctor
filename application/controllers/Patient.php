@@ -179,6 +179,21 @@ class Patient extends CI_Controller {
         $this->my_smarty->assign('data', $data)->view('patient/edit-application3');
     }
     
+    public function application($applicationId)
+    {
+        $user = $this->session->userdata('user');
+        $data = array(        );
+        
+        $application = $this->application_model->get_application($applicationId);
+        $application->patient = $this->user_model->get_user($application->patientId);
+        $application->doctor = $this->user_model->get_user($application->doctorId);
+        $application->appointment = $this->appointment_model->get_appointment_by_application_id($applicationId);
+        
+        $data['application'] = $application;
+        $data['doctor'] = $application->doctor;
+        $this->my_smarty->assign('data', $data)->view('patient/application');
+    }
+    
     public function doctors()
     {
         $data = array('doctors' => $this->user_model->get_all_doctors());

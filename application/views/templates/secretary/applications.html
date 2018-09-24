@@ -4,6 +4,9 @@
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a href="{site_url('/secretary/doctors')}">Doctors</a></li>
+            <li class="breadcrumb-item "><a href="{site_url('/secretary/doctor')}/{$data.doctor->userId}">{$data.doctor->title}
+                    {$data.doctor->firstname} {$data.doctor->lastname}</a></li>
             <li class="breadcrumb-item active">Applications</li>
         </ol>
     </nav>
@@ -34,9 +37,10 @@
                 <td>{$application->status}</td>
                 <td>{$application->reason}</td>
                 <td>
-                    {if $application->status == 'Pending'}
                     <a class="btn btn-primary btn-sm" href="{site_url('/secretary/application/')}{$application->applicationId}">View</a>
-                    {/if}
+                        <!-- {if $application->status == 'Pending'}
+                    <a class="btn btn-primary btn-sm" href="{site_url('/secretary/application/')}{$application->applicationId}">View</a>
+                    {/if} -->
                 </td>
             </tr>
             {/foreach}

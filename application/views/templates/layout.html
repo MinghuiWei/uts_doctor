@@ -71,12 +71,12 @@
                     {if isset($smarty.session.user)}
                     <!-- patient Menu -->
                     {if $smarty.session.user->type == 'patient'}
-                    <li class="list-group-item">
+                    <!-- <li class="list-group-item">
                         <a class="text-white" href="{site_url('/patient')}">
                             <i class="fas fa-home mr-2"></i>
                             Home&nbsp;
                         </a>
-                    </li>
+                    </li> -->
                     <li class="list-group-item">
                         <a class="text-white" href="{site_url('/patient/editInfo')}">
                             <i class="fas fa-user mr-2"></i>
@@ -133,21 +133,9 @@
                     <!-- Secretary Menu -->
                     {if $smarty.session.user->type == 'secretary'}
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/secretary/applications')}">
-                            <i class="fas fa-file-invoice mr-2"></i>
-                            Applications&nbsp;
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/secretary/appointments')}">
-                            <i class="fas fa-calendar-alt mr-2"></i>
-                            Appointments&nbsp;
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/secretary/schedules')}">
-                            <i class="fas fa-clock mr-2"></i>
-                            Doctor Schedules&nbsp;
+                        <a class="text-white" href="{site_url('/secretary/doctors')}">
+                            <i class="fas fa-user-md mr-2"></i>
+                            Doctors&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">

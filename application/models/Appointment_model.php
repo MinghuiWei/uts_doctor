@@ -28,11 +28,17 @@ class Appointment_model extends CI_Model
         $result = $query->result();
         return $result;
     }
-    
 
     public function get_appointment($appointmentId)
     {
         $query = $this->db->get_where($this->TABLE, array('appointmentId' => $appointmentId));
+        $result = $query->row();
+        return $result;
+    }
+
+    public function get_appointment_by_application_id($applicationId)
+    {
+        $query = $this->db->get_where($this->TABLE, array('applicationId' => $applicationId));
         $result = $query->row();
         return $result;
     }

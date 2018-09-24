@@ -1,0 +1,178 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a href="{site_url('/patient/applications')}">Applications</a></li>
+            <li class="breadcrumb-item active">View Application</li>
+        </ol>
+    </nav>
+
+    <h3>View Application</h3>
+    <hr />
+
+    <div class="row">
+        <div class="col-7">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center">Application Detail</h3>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <dl>
+                                <dt>Name</dt>
+                                <dd>{$data.application->patient->title} {$data.application->patient->firstname}
+                                    {$data.application->patient->lastname}</dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt>Address</dt>
+                                <dd>{$data.application->patient->address}</dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt>Birthday</dt>
+                                <dd>{$data.application->patient->dob}</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <dl>
+                                <dt>Email</dt>
+                                <dd>{$data.application->patient->email}</dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt>Phone</dt>
+                                <dd>{$data.application->patient->phone}</dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt>Gender</dt>
+                                <dd>{$data.application->patient->gender}</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col">
+                            <dl>
+                                <dt>Medicare Number</dt>
+                                <dd>{$data.application->patient->medicareNo}</dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt>General Practitioner</dt>
+                                <dd>{$data.application->gp}</dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt>Location of GP</dt>
+                                <dd>{$data.application->gpAddress}</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <dl>
+                                <dt>Referal</dt>
+                                <dd>{$data.application->referal}</dd>
+                            </dl>
+                        </div>
+                        <div class="col-4">
+                            <dl>
+                                <dt>Other Documents</dt>
+                                <dd>{$data.application->documents}</dd>
+                            </dl>
+                        </div>
+                        <div class="col-4">
+                            <dl>
+                                <dt>Further Notes</dt>
+                                <dd>{$data.application->notes}</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-4">
+                            <dl>
+                                <dt>Preferred Professional</dt>
+                                <dd>{$data.application->doctor->title} {$data.application->doctor->firstname}
+                                    {$data.application->doctor->lastname}</dd>
+                            </dl>
+                        </div>
+                        <div class="col-4">
+                            <dl>
+                                <dt>Appointment Type</dt>
+                                <dd>{$data.application->appointmentType}</dd>
+                            </dl>
+                        </div>
+                        <div class="col-4">
+                            <dl>
+                                <dt>Appointment Topics</dt>
+                                <dd>{$data.application->appointmentTopics}</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <dl>
+                                <dt>Preferred Days</dt>
+                                <dd>{$data.application->preferedDays}</dd>
+                            </dl>
+                        </div>
+                        <div class="col-4">
+                            <dl>
+                                <dt>Preferred Time</dt>
+                                <dd>{$data.application->preferedTime}</dd>
+                            </dl>
+                        </div>
+                        <div class="col-4">
+                            <dl>
+                                <dt>Speical Requests</dt>
+                                <dd>{$data.application->specialRequests}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-4">
+                            <dl>
+                                <dt>Status</dt>
+                                <dd>{$data.application->status}</dd>
+                            </dl>
+                        </div>
+                        {if isset($data.application->appointment)}
+                        <div class="col-4">
+                            <dl>
+                                <dt>Appointment</dt>
+                                <dd><a href="{site_url('/patient/appointment')}/{$data.application->appointment->appointmentId}">Click
+                                        Here</a></dd>
+                            </dl>
+                        </div>
+                        {/if}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{/block}

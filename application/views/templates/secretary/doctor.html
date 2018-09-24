@@ -1,0 +1,77 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{site_url('/secretary/doctors')}">Doctors</a></li>
+            <li class="breadcrumb-item active">{$data.doctor->title}
+                {$data.doctor->firstname}
+                {$data.doctor->lastname}</li>
+        </ol>
+    </nav>
+
+    <h3>{$data.doctor->title}
+        {$data.doctor->firstname}
+        {$data.doctor->lastname}</h3>
+    <small class="badge badge-secondary text-sm text-capitalize">{$data.doctor->type}</small>
+    <hr />
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <dl>
+                        <dt>Email</dt>
+                        <dd>{$data.doctor->email}</dd>
+                    </dl>
+                </div>
+                <div class="col">
+                    <dl>
+                        <dt>Phone</dt>
+                        <dd>{$data.doctor->phone}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <dl>
+                        <dt>Gender</dt>
+                        <dd>{$data.doctor->gender}</dd>
+                    </dl>
+                </div>
+                <div class="col">
+                    <dl>
+                        <dt>Address</dt>
+                        <dd>{$data.doctor->address}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <dl>
+                        <dt>Birthday</dt>
+                        <dd>{$data.doctor->dob}</dd>
+                    </dl>
+                </div>
+            </div>
+            <dl>
+                <dt>Verification</dt>
+                <dd>{$data.doctor->verification}</dd>
+            </dl>
+            <dl>
+                <dt>Specialty</dt>
+                <dd>{$data.doctor->specialty}</dd>
+            </dl>
+
+            <a class="btn btn-primary btn-sm" href="{site_url('/secretary/applications')}/{$data.doctor->userId}">Applications</a>
+            <a class="btn btn-info btn-sm" href="{site_url('/secretary/appointments/')}{$data.doctor->userId}">Appointments</a>
+            <a class="btn btn-secondary btn-sm" href="{site_url('/secretary/schedules/')}{$data.doctor->userId}">Schedules</a>
+
+        </div>
+
+
+    </div>
+</div>
+
+{/block}

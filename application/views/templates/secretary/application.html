@@ -4,7 +4,10 @@
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{site_url('/secretary/applications')}">Applications</a></li>
+            <li class="breadcrumb-item "><a href="{site_url('/secretary/doctors')}">Doctors</a></li>
+            <li class="breadcrumb-item "><a href="{site_url('/secretary/doctor')}/{$data.doctor->userId}">{$data.doctor->title}
+                    {$data.doctor->firstname} {$data.doctor->lastname}</a></li>
+            <li class="breadcrumb-item"><a href="{site_url('/secretary/applications')}/{$data.doctor->userId}">Applications</a></li>
             <li class="breadcrumb-item active">View Application</li>
         </ol>
     </nav>
@@ -150,10 +153,28 @@
                                 </dl>
                             </div>
                         </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Status</dt>
+                                    <dd>{$data.application->status}</dd>
+                                </dl>
+                            </div>
+                            {if isset($data.application->appointment)}
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Appointment</dt>
+                                    <dd><a href="{site_url('/secretary/appointment')}/{$data.application->appointment->appointmentId}">Click Here</a></dd>
+                                </dl>
+                            </div>
+                            {/if}
+                        </div>
 
                     </div>
                 </div>
             </div>
+            {if $data.application->status == 'Pending'}
             <div class="col-5">
 
                 {if $data.error_msgs}
@@ -225,6 +246,7 @@
                 </div>
 
             </div>
+            {/if}
         </div>
     </form>
 
