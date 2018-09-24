@@ -7,6 +7,7 @@ class Patient extends CI_Controller {
         parent::__construct();
         $this->load->model('user_model');
         $this->load->model('application_model');
+        $this->load->model('appointment_model');
         
         if ( !$this->session->userdata('user') || $this->session->userdata('user')->type != 'patient')
         {
@@ -168,13 +169,57 @@ class Patient extends CI_Controller {
             }
             if ($action == 'submit') {
                 $this->application_model->update_application(array(
-                    "applicationId" => $applicationId,
-                    "status" => "Pending",
-                    "submitted" => date("Y-m-d")
+                "applicationId" => $applicationId,
+                "status" => "Pending",
+                "submitted" => date("Y-m-d")
                 ));
                 redirect('/patient/applications/');
             }
         }
         $this->my_smarty->assign('data', $data)->view('patient/edit-application3');
+    }
+    
+    public function doctors()
+    {
+        $data = array('doctors' => $this->user_model->get_all_doctors());
+        $this->my_smarty->assign('data', $data)->view('patient/doctors');
+    }
+    
+    public function doctor($doctorId)
+    {
+        $data = array(
+        'doctor' => $this->user_model->get_user($doctorId)
+        );
+        $this->my_smarty->assign('data', $data)->view('patient/doctor');
+    }
+    
+    public function appointments()
+    {
+        $user = $this->session->userdata('user');
+        $appointments = $this->appointment_model->get_all_appointments($user->userId);
+        foreach($appointments as $index => $appointment) {
+            $application = $this->application_model->get_application($appointment->applicationId);
+            $appointments[$index]->application = $application;
+            $appointments[$index]->patient = $this->user_model->get_user($application->patientId);
+            $appointments[$index]->doctor = $this->user_model->get_user($application->doctorId);
+            $appointments[$index]->application->patient = $appointments[$index]->patient;
+            $appointments[$index]->application->doctor = $appointments[$index]->doctor;
+        }
+        $data['appointments'] = $appointments;
+        $this->my_smarty->assign('data', $data)->view('patient/appointments');
+    }
+    
+    public function appointment($appointmentId)
+    {
+        $data = array();
+        $appointment = $this->appointment_model->get_appointment($appointmentId);
+        $application = $this->application_model->get_application($appointment->applicationId);
+        $application->patient = $this->user_model->get_user($application->patientId);
+        $application->doctor = $this->user_model->get_user($application->doctorId);
+        $appointment->patient = $application->patient;
+        $appointment->doctor = $application->doctor;
+        $data['application'] = $application;
+        $data['appointment'] = $appointment;
+        $this->my_smarty->assign('data', $data)->view('patient/appointment');
     }
 }

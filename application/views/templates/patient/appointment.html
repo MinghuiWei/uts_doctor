@@ -4,7 +4,7 @@
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{site_url('/secretary/appointments')}">Appointments</a></li>
+            <li class="breadcrumb-item"><a href="{site_url('/patient/appointments')}">Appointments</a></li>
             <li class="breadcrumb-item active">View Appointment</li>
         </ol>
     </nav>
@@ -144,11 +144,6 @@
             </div>
             <div class="col-5">
 
-                {if $data.error_msgs}
-                <div class="alert alert-danger">{$data.error_msgs}</div>
-                {/if}
-
-
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
@@ -160,46 +155,34 @@
                         <div class="bg-white p-3">
                             <form method="post">
                                 <p>Status: <span class="text-muted">{$data.appointment->status}</span></p>
-                                {if $data.appointment->status != 'Done'}
+                                <hr>
+
                                 <div class="row">
                                     <div class="col">
-                                        <div class="form-group">
-                                            <label>Date</label>
-                                            <input type="date" name="date" class="form-control" value="{$data.appointment->date}"
-                                                required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label>Start Time</label>
-                                            <select class="form-control" name="startTime" required>
-                                                {foreach from=$data.time_option item=day}
-                                                <option value="{$day}" {if $data.appointment->startTime ==
-                                                    $day}selected{/if}>{$day}</option>
-                                                {/foreach}
-                                            </select>
-                                        </div>
+                                        <dl>
+                                            <dt>Date</dt>
+                                            <dd>{$data.appointment->date}</dd>
+                                        </dl>
                                     </div>
                                     <div class="col">
-                                        <div class="form-group">
-                                            <label>End Time</label>
-                                            <select class="form-control" name="endTime" required>
-                                                {foreach from=$data.time_option item=day}
-                                                <option value="{$day}" {if $data.appointment->endTime ==
-                                                    $day}selected{/if}>{$day}</option>
-                                                {/foreach}
-                                            </select>
-                                        </div>
+                                        <dl>
+                                            <dt>Start Time</dt>
+                                            <dd>{$data.appointment->startTime}</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col">
+                                        <dl>
+                                            <dt>End Time</dt>
+                                            <dd>{$data.appointment->endTime}</dd>
+                                        </dl>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary btn-block" type="submit" name="action" value="create">Update
-                                    Appointment</button>
-                                
-                                {if $data.appointment->status == 'Confirmed'}
-                                <a class="btn btn-danger btn-confirm btn-block mt-3" href="{site_url('/secretary/cancelAppointment/')}{$data.appointment->appointmentId}">Cancel Appointment</a>
-                                {/if}
+
+                                {if $data.appointment->notes}
+                                <dl>
+                                    <dt>Notes</dt>
+                                    <dd>{$data.appointment->notes}</dd>
+                                </dl>
                                 {/if}
                             </form>
                         </div>

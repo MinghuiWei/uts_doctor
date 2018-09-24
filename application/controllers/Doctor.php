@@ -7,6 +7,7 @@ class Doctor extends CI_Controller {
         parent::__construct();
         $this->load->model('user_model');
         $this->load->model('application_model');
+        $this->load->model('appointment_model');
         $this->load->model('schedule_model');
         
         if ( !$this->session->userdata('user') || $this->session->userdata('user')->type != 'doctor')
@@ -23,11 +24,17 @@ class Doctor extends CI_Controller {
     public function appointments()
     {
         $user = $this->session->userdata('user');
-        $applications = $this->application_model->get_all_doctor_applications($user->userId);
-        foreach($applications as $index => $application) {
-            $applications[$index]->patient = $this->user_model->get_user($application->patientId);
+        $data = array('doctor' => $this->user_model->get_user($user->userId));
+        $appointments = $this->appointment_model->get_all_doctor_appointments($user->userId);
+        foreach($appointments as $index => $appointment) {
+            $application = $this->application_model->get_application($appointment->applicationId);
+            $appointments[$index]->application = $application;
+            $appointments[$index]->patient = $this->user_model->get_user($application->patientId);
+            $appointments[$index]->doctor = $this->user_model->get_user($application->doctorId);
+            $appointments[$index]->application->patient = $appointments[$index]->patient;
+            $appointments[$index]->application->doctor = $appointments[$index]->doctor;
         }
-        $data = array('applications' => $applications);
+        $data['appointments'] = $appointments;
         $this->my_smarty->assign('data', $data)->view('doctor/appointments');
     }
     
@@ -50,8 +57,13 @@ class Doctor extends CI_Controller {
         $user = $this->session->userdata('user');
         $time_option = array();
         for ($i = 8; $i <= 17; $i++) {
-            array_push($time_option, "$i".":00");
-            array_push($time_option, "$i".":30");
+            if ($i < 10) {
+                array_push($time_option, "0"."$i".":00:00");
+                array_push($time_option, "0"."$i".":30:00");
+            } else {
+                array_push($time_option, "$i".":00:00");
+                array_push($time_option, "$i".":30:00");
+            }
         }
         $data = array(
             'scheduleId' => $scheduleId,
@@ -91,109 +103,56 @@ class Doctor extends CI_Controller {
         $this->my_smarty->assign('data', $data)->view('doctor/edit-schedule');
     }
     
-    // public function editApplication1($applicationId="")
-    // {
-    //     $user = $this->session->userdata('user');
-    //     $data = array('applicationId'=>$applicationId);
-    //     $data['error_msgs'] = '';
-    //     $this->form_validation->set_rules('action', 'Action', 'required');
-        
-    //     if ($this->form_validation->run() === false) {
-    //         // default return
-    //         $data['error_msgs'] = validation_errors();
-    //     } else {
-    //         redirect('/patient/editApplication2/'.$applicationId);
-    //     }
-    //     $this->my_smarty->assign('data', $data)->view('patient/edit-application1');
-    // }
+    public function cancelAppointment($appointmentId)
+    {
+        $appointment = $this->appointment_model->get_appointment($appointmentId);
+        $input = array(
+        'appointmentId' => $appointmentId,
+        'status' => 'Cancelled'
+        );
+        $this->appointment_model->update_appointment($input);
+        redirect('/doctor/appointments');
+    }
     
-    // public function editApplication2($applicationId="")
-    // {
-    //     $user = $this->session->userdata('user');
-    //     $data = array('applicationId'=>$applicationId);
-    //     $data['error_msgs'] = '';
+    public function appointment($appointmentId)
+    {
+        $user = $this->session->userdata('user');
+        $time_option = array();
+        for ($i = 8; $i <= 9; $i++) {
+            array_push($time_option, "0$i".":00:00");
+            array_push($time_option, "0$i".":30:00");
+        }
+        for ($i = 10; $i <= 17; $i++) {
+            array_push($time_option, "$i".":00:00");
+            array_push($time_option, "$i".":30:00");
+        }
+        $data = array(
+        'error_msgs' => '',
+        'time_option' => $time_option
+        );
         
-    //     $this->form_validation->set_rules('doctorId', 'Doctor Id', 'trim|required');
-    //     $this->form_validation->set_rules('gp', 'GP', 'trim|required');
-    //     $this->form_validation->set_rules('gpAddress', 'Location of GP', 'trim|required');
-    //     $this->form_validation->set_rules('preferedDays', 'Prefered Days', 'trim|required');
-    //     $this->form_validation->set_rules('preferedTime', 'Prefered Time', 'trim|required');
+        $action = $this->input->post("action");
         
-    //     if ($this->form_validation->run() === false) {
-    //         // default return
-    //         $data['error_msgs'] = validation_errors();
-    //         if ($applicationId) {
-    //             $data['application'] = $this->application_model->get_application($applicationId);
-    //         } else {
-    //             $data['application'] = $this->application_model->create_empty_application();
-    //         }
-    //         $data['doctors'] = $this->user_model->get_all_doctors();
-    //     } else {
-    //         $action = $this->input->post('action');
-    //         $input = array(
-    //         "applicationId"=>$applicationId,
-    //         "patientId" => $user->userId,
-    //         "gp" => $this->input->post("gp"),
-    //         "gpAddress" => $this->input->post("gpAddress"),
-    //         "referal" => $this->input->post("referal"),
-    //         "documents" => $this->input->post("documents"),
-    //         "notes" => $this->input->post("notes"),
-    //         "doctorId" => $this->input->post("doctorId"),
-    //         "appointmentType" => $this->input->post("appointmentType"),
-    //         "appointmentTopics" => $this->input->post("appointmentTopics"),
-    //         "preferedDays" => $this->input->post("preferedDays"),
-    //         "preferedTime" => $this->input->post("preferedTime"),
-    //         "specialRequests" => $this->input->post("specialRequests"),
-    //         "status" => $action == 'submit' ? "Pending" : "Draft"
-    //         );
-    //         if ($applicationId) {
-    //             $this->application_model->update_application($input);
-    //             if ($action == 'continue') {
-    //                 redirect('/patient/editApplication3/'.$applicationId);
-    //             }
-    //             if ($action == 'save') {
-    //                 redirect('/patient/applications/');
-    //             }
-    //         } else {
-    //             $application = $this->application_model->create_application($input);
-    //             if ($action == 'continue') {
-    //                 redirect('/patient/editApplication3/'.$application->applicationId);
-    //             }
-    //             if ($action == 'save') {
-    //                 redirect('/patient/applications/');
-    //             }
-    //         }
-    //     }
-    //     $this->my_smarty->assign('data', $data)->view('patient/edit-application2');
-    // }
-    
-    // public function editApplication3($applicationId="")
-    // {
-    //     $user = $this->session->userdata('user');
-    //     $data = array('applicationId' => $applicationId);
-    //     $application = $this->application_model->get_application($applicationId);
-    //     $application->doctor = $this->user_model->get_user($application->doctorId);
-    //     $data['error_msgs'] = '';
+        $this->form_validation->set_rules('action', 'Action', 'trim|required');
         
-    //     $this->form_validation->set_rules('action', 'Action', 'required');
+        $appointment = $this->appointment_model->get_appointment($appointmentId);
+        $application = $this->application_model->get_application($appointment->applicationId);
+        $application->patient = $this->user_model->get_user($application->patientId);
+        $application->doctor = $this->user_model->get_user($application->doctorId);
+        $appointment->patient = $application->patient;
+        $appointment->doctor = $application->doctor;
         
-    //     if ($this->form_validation->run() === false) {
-    //         // default return
-    //         $data['error_msgs'] = validation_errors();
-    //         $data['application'] = $application;
-    //     } else {
-    //         $action = $this->input->post('action');
-    //         if ($action == 'save') {
-    //             redirect('/patient/applications/');
-    //         }
-    //         if ($action == 'submit') {
-    //             $this->application_model->update_application(array(
-    //                 "applicationId" => $applicationId,
-    //                 "status" => "Pending"
-    //             ));
-    //             redirect('/patient/applications/');
-    //         }
-    //     }
-    //     $this->my_smarty->assign('data', $data)->view('patient/edit-application3');
-    // }
+        if ($this->form_validation->run() === false) {
+            $data['application'] = $application;
+            $data['appointment'] = $appointment;
+            $this->my_smarty->assign('data', $data)->view('doctor/appointment');
+        } else {
+            $input = array(
+            "appointmentId" => $appointmentId,
+            "notes" => $this->input->post("notes"),
+            );
+            $this->appointment_model->update_appointment($input);
+            redirect('/doctor/appointments');
+        }
+    }
 }

@@ -4,7 +4,7 @@
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{site_url('/secretary/appointments')}">Appointments</a></li>
+            <li class="breadcrumb-item"><a href="{site_url('/doctor/appointments')}">Appointments</a></li>
             <li class="breadcrumb-item active">View Appointment</li>
         </ol>
     </nav>
@@ -160,48 +160,22 @@
                         <div class="bg-white p-3">
                             <form method="post">
                                 <p>Status: <span class="text-muted">{$data.appointment->status}</span></p>
-                                {if $data.appointment->status != 'Done'}
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label>Date</label>
-                                            <input type="date" name="date" class="form-control" value="{$data.appointment->date}"
-                                                required>
-                                        </div>
-                                    </div>
+                                <hr>
+                                {if $data.appointment->status != 'Cancelled'}
+
+                                <div class="form-group">
+                                    <label>Notes</label>
+                                    <textarea name="notes" class="form-control">{$data.appointment->notes}</textarea>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label>Start Time</label>
-                                            <select class="form-control" name="startTime" required>
-                                                {foreach from=$data.time_option item=day}
-                                                <option value="{$day}" {if $data.appointment->startTime ==
-                                                    $day}selected{/if}>{$day}</option>
-                                                {/foreach}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label>End Time</label>
-                                            <select class="form-control" name="endTime" required>
-                                                {foreach from=$data.time_option item=day}
-                                                <option value="{$day}" {if $data.appointment->endTime ==
-                                                    $day}selected{/if}>{$day}</option>
-                                                {/foreach}
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <button class="btn btn-primary btn-block" type="submit" name="action" value="create">Update
                                     Appointment</button>
-                                
-                                {if $data.appointment->status == 'Confirmed'}
-                                <a class="btn btn-danger btn-confirm btn-block mt-3" href="{site_url('/secretary/cancelAppointment/')}{$data.appointment->appointmentId}">Cancel Appointment</a>
-                                {/if}
                                 {/if}
                             </form>
+                            {if $data.appointment->status == 'Confirmed'}
+                            <a class="btn btn-danger btn-confirm btn-block mt-3" href="{site_url('/doctor/cancelAppointment/')}{$data.appointment->appointmentId}">Cancel
+                                Appointment</a>
+                            {/if}
                         </div>
 
                     </div>

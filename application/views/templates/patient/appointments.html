@@ -8,7 +8,7 @@
         </ol>
     </nav>
 
-    <h3>All Appointments</h3>
+    <h3>My Appointments</h3>
     <hr />
 
     <table class="table table-bordered table-striped bg-white data-table">
@@ -36,10 +36,7 @@
                 <td>{$appointment->endTime}</td>
                 <td>{$appointment->status}</td>
                 <td>
-                    <a class="btn btn-primary btn-sm" href="{site_url('/doctor/appointment/')}{$appointment->appointmentId}">View</a>
-                    {if $appointment->status == 'Confirmed'}
-                    <a class="btn btn-danger btn-sm btn-confirm" href="{site_url('/doctor/cancelAppointment/')}{$appointment->appointmentId}">Cancel</a>
-                    {/if}
+                    <a class="btn btn-primary btn-sm" href="{site_url('/patient/appointment/')}{$appointment->appointmentId}">View</a>
                 </td>
             </tr>
             {/foreach}
