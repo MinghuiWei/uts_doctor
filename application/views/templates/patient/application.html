@@ -88,13 +88,13 @@
                         <div class="col-4">
                             <dl>
                                 <dt>Referal</dt>
-                                <dd>{$data.application->referal}</dd>
+                               <dd><a href="{base_url('/uploads')}/{$data.application->referal}">{$data.application->referal}</a></dd>
                             </dl>
                         </div>
                         <div class="col-4">
                             <dl>
-                                <dt>Other Documents</dt>
-                                <dd>{$data.application->documents}</dd>
+                                <dt>Other Document</dt>
+                                <dd><a href="{base_url('/uploads')}/{$data.application->documents}">{$data.application->documents}</a></dd>
                             </dl>
                         </div>
                         <div class="col-4">

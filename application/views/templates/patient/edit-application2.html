@@ -4,7 +4,7 @@
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{site_url('/patients/applications')}">Applications</a></li>
+            <li class="breadcrumb-item"><a href="{site_url('/patient/applications')}">Applications</a></li>
             {if $data.applicationId}
             <li class="breadcrumb-item active">Edit Application</li>
             {/if}
@@ -22,7 +22,7 @@
     {/if}
     <hr />
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-7">
                 <div class="card">
@@ -52,7 +52,9 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Referal</label>
-                                    <input type="text" name="referal" class="form-control" value="{$data.application->referal}">
+                                    <input type="file" class="form-control" name="referal"/>
+                                    <p class="text-muted">{$data.application->referal}</p>
+                                    <!-- <input type="text" name="referal" class="form-control" value="{$data.application->referal}"> -->
                                 </div>
                             </div>
                         </div>
@@ -60,8 +62,10 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label>Other Medical Documents</label>
-                                    <input type="text" name="documents" class="form-control" value="{$data.application->documents}">
+                                    <label>Other Medical Document</label>
+                                    <input type="file" class="form-control" name="documents"/>
+                                    <p class="text-muted">{$data.application->documents}</p>
+                                    <!-- <input type="text" name="documents" class="form-control" value="{$data.application->documents}"> -->
                                 </div>
                             </div>
                         </div>

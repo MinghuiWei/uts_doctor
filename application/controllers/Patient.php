@@ -9,6 +9,10 @@ class Patient extends CI_Controller {
         $this->load->model('application_model');
         $this->load->model('appointment_model');
         
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'gif|jpg|png|docx|pdf|txt|zip';
+        $this->load->library('upload', $config);
+        
         if ( !$this->session->userdata('user') || $this->session->userdata('user')->type != 'patient')
         {
             redirect('/home/login');
@@ -115,8 +119,8 @@ class Patient extends CI_Controller {
             "patientId" => $user->userId,
             "gp" => $this->input->post("gp"),
             "gpAddress" => $this->input->post("gpAddress"),
-            "referal" => $this->input->post("referal"),
-            "documents" => $this->input->post("documents"),
+            // "referal" => $this->input->post("referal"),
+            // "documents" => $this->input->post("documents"),
             "notes" => $this->input->post("notes"),
             "doctorId" => $this->input->post("doctorId"),
             "appointmentType" => $this->input->post("appointmentType"),
@@ -127,6 +131,27 @@ class Patient extends CI_Controller {
             "submitted" =>$action == 'submit' ? date('Y-m-d') : NULL,
             "status" => $action == 'submit' ? "Pending" : "Draft"
             );
+
+            $config['upload_path'] = "./uploads";
+            $config['allowed_types'] = 'gif|jpg|png|docx|pdf|txt|zip';
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('referal'))
+            {
+                $input['referal'] = $this->upload->data('file_name');
+                // var_dump($this->upload->data('file_name'));
+            } else {
+                // var_dump($this->upload->display_errors());
+            }
+
+            if ($this->upload->do_upload('documents'))
+            {
+                $input['documents'] = $this->upload->data('file_name');
+                // var_dump($this->upload->data('file_name'));
+            } else {
+                // var_dump($this->upload->display_errors());
+            }
+
             if ($applicationId) {
                 $this->application_model->update_application($input);
                 if ($action == 'continue') {
