@@ -36,8 +36,8 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('dob', 'Birthday', 'required');
         $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[10]|numeric');
-        if ($userId) {
-            $this->form_validation->set_rules('password', 'Passwrod', 'trim|required|min_length[4]|max_length[20]');
+        if (!$userId) {
+            $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[4]|max_length[20]');
         }
         
         if ($this->form_validation->run() === false) {
@@ -116,8 +116,8 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('dob', 'Birthday', 'required');
         $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[10]|numeric');
-        if ($userId) {
-            $this->form_validation->set_rules('password', 'Passwrod', 'trim|required|min_length[4]|max_length[20]');
+        if (!$userId) {
+            $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[4]|max_length[20]');
         }
 
         if ($this->form_validation->run() === false) {

@@ -19,7 +19,7 @@ class Home extends CI_Controller {
         $data['error_msg'] = '';
         
         $this->form_validation->set_rules('email', 'Email', 'required');
-        $this->form_validation->set_rules('password', 'Passwrod', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
         
         if ($this->form_validation->run() === false) {
             // default return
@@ -46,7 +46,7 @@ class Home extends CI_Controller {
         $data['error_msg'] = '';
         
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[user.email]');
-        $this->form_validation->set_rules('password', 'Passwrod', 'trim|required|min_length[4]|max_length[20]');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[4]|max_length[20]');
         $this->form_validation->set_rules('firstname', 'Firstname', 'required');
         $this->form_validation->set_rules('lastname', 'Lastname', 'required');
         $this->form_validation->set_rules('gender', 'Gender', 'required');
@@ -76,7 +76,7 @@ class Home extends CI_Controller {
             if ($user) {
                 // login success then redirect
                 $this->session->set_userdata('user', $user);
-                redirect('/patient/dashboard');
+                redirect('/patient');
             } else {
                 // login fail then show error msg
                 $data['error_msgs'] = 'Oops, please verify all your input and try again.';
