@@ -8,8 +8,7 @@
         </ol>
     </nav>
 
-    <a class="btn btn-success float-right" href="{site_url('/patient/editApplication1')}">Create new application</a>
-    <h3>All Applications</h3>
+    <h3>All Applications for <i>{$data.doctor->title} {$data.doctor->firstname} {$data.doctor->lastname}</i></h3>
     <hr />
 
     <table class="table table-bordered table-striped bg-white data-table">

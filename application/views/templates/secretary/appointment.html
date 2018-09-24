@@ -1,0 +1,216 @@
+{extends file='layout.html'}
+{block name=body}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{site_url('/secretary/appointments')}">Appointments</a></li>
+            <li class="breadcrumb-item active">View Appointment</li>
+        </ol>
+    </nav>
+
+    <h3>View Appointment</h3>
+    <hr />
+
+    <form method="post">
+        <div class="row">
+            <div class="col-7">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-center">Application Detail</h3>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <dl>
+                                    <dt>Name</dt>
+                                    <dd>{$data.application->patient->title} {$data.application->patient->firstname}
+                                        {$data.application->patient->lastname}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>Address</dt>
+                                    <dd>{$data.application->patient->address}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>Birthday</dt>
+                                    <dd>{$data.application->patient->dob}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <dl>
+                                    <dt>Email</dt>
+                                    <dd>{$data.application->patient->email}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>Phone</dt>
+                                    <dd>{$data.application->patient->phone}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>Gender</dt>
+                                    <dd>{$data.application->patient->gender}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col">
+                                <dl>
+                                    <dt>Medicare Number</dt>
+                                    <dd>{$data.application->patient->medicareNo}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>General Practitioner</dt>
+                                    <dd>{$data.application->gp}</dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <dl>
+                                    <dt>Location of GP</dt>
+                                    <dd>{$data.application->gpAddress}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Referal</dt>
+                                    <dd>{$data.application->referal}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Other Documents</dt>
+                                    <dd>{$data.application->documents}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Further Notes</dt>
+                                    <dd>{$data.application->notes}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Preferred Professional</dt>
+                                    <dd>{$data.application->doctor->title} {$data.application->doctor->firstname}
+                                        {$data.application->doctor->lastname}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Appointment Type</dt>
+                                    <dd>{$data.application->appointmentType}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Appointment Topics</dt>
+                                    <dd>{$data.application->appointmentTopics}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <dl>
+                                    <dt>Speical Requests</dt>
+                                    <dd>{$data.application->specialRequests}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+
+                {if $data.error_msgs}
+                <div class="alert alert-danger">{$data.error_msgs}</div>
+                {/if}
+
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                            aria-controls="home" aria-selected="true">Appointment Detail</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent" style="border: 1px solid #eee; border-top: none;">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="bg-white p-3">
+                            <form method="post">
+                                <p>Status: <span class="text-muted">{$data.appointment->status}</span></p>
+                                {if $data.appointment->status != 'Done'}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Date</label>
+                                            <input type="date" name="date" class="form-control" value="{$data.appointment->date}"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Start Time</label>
+                                            <select class="form-control" name="startTime" required>
+                                                {foreach from=$data.time_option item=day}
+                                                <option value="{$day}" {if $data.appointment->startTime ==
+                                                    $day}selected{/if}>{$day}</option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>End Time</label>
+                                            <select class="form-control" name="endTime" required>
+                                                {foreach from=$data.time_option item=day}
+                                                <option value="{$day}" {if $data.appointment->endTime ==
+                                                    $day}selected{/if}>{$day}</option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-block" type="submit" name="action" value="create">Confirm
+                                    Appointment</button>
+                                
+                                {if $data.appointment->status == 'Confirmed'}
+                                <a class="btn btn-danger btn-confirm btn-block mt-3" href="{site_url('/secretary/cancelAppointment/')}{$data.appointment->appointmentId}">Cancel Appointment</a>
+                                {/if}
+                                {/if}
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+</div>
+
+{/block}

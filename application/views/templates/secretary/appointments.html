@@ -8,8 +8,7 @@
         </ol>
     </nav>
 
-    <a class="btn btn-success float-right" href="{site_url('/patient/editApplication1')}">Create new appointment</a>
-    <h3>All Appointments</h3>
+    <h3>All Appointments for <i>{$data.doctor->title} {$data.doctor->firstname} {$data.doctor->lastname}</i></h3>
     <hr />
 
     <table class="table table-bordered table-striped bg-white data-table">
@@ -18,7 +17,9 @@
                 <th>#</th>
                 <th>Doctor</th>
                 <th>Patient</th>
-                <th>Submitted</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>EndTime</th>
                 <th>Status</th>
                 <th>Manage</th>
             </tr>
@@ -28,14 +29,16 @@
             <tr>
                 <!-- <td>{$smarty.foreach.foo.index + 1}</td> -->
                 <td>{$appointment->appointmentId}</td>
-                <td>{$smarty.session.user->title} {$smarty.session.user->firstname} {$smarty.session.user->lastname}</td>
+                <td>{$appointment->doctor->title} {$appointment->doctor->firstname} {$appointment->doctor->lastname}</td>
                 <td>{$appointment->patient->title} {$appointment->patient->firstname} {$appointment->patient->lastname}</td>
-                <td>{$appointment->submitted}</td>
+                <td>{$appointment->date}</td>
+                <td>{$appointment->startTime}</td>
+                <td>{$appointment->endTime}</td>
                 <td>{$appointment->status}</td>
                 <td>
-                    {if $appointment->status == 'Draft'}
-                    <a class="btn btn-secondary btn-sm" href="{site_url('/patient/editApplication1/')}{$appointment->appointmentId}">Edit</a>
-                    <a class="btn btn-danger btn-sm btn-confirm" href="{site_url('/patient/deleteApplication/')}{$appointment->appointmentId}">Delete</a>
+                    <a class="btn btn-primary btn-sm" href="{site_url('/secretary/appointment/')}{$appointment->appointmentId}">View</a>
+                    {if $appointment->status == 'Confirmed'}
+                    <a class="btn btn-danger btn-sm btn-confirm" href="{site_url('/secretary/cancelAppointment/')}{$appointment->appointmentId}">Cancel</a>
                     {/if}
                 </td>
             </tr>
