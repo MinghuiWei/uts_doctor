@@ -34,8 +34,7 @@
                 <td>{$application->status}</td>
                 <td>
                     {if $application->status == 'Pending'}
-                    <a class="btn btn-primary btn-sm" href="{site_url('/secretary/viewApplication/')}{$application->applicationId}">View</a>
-                    <!-- <a class="btn btn-danger btn-sm btn-confirm" href="{site_url('/secretary/rejectApplication/')}{$application->applicationId}">Reject</a> -->
+                    <a class="btn btn-primary btn-sm" href="{site_url('/secretary/application/')}{$application->applicationId}">View</a>
                     {/if}
                 </td>
             </tr>

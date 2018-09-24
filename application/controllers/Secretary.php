@@ -53,7 +53,25 @@ class Secretary extends CI_Controller {
         $this->my_smarty->assign('data', $data)->view('secretary/schedules');
     }
 
-    
+    public function application($applicationId)
+    {
+        $time_option = array();
+        for ($i = 8; $i <= 17; $i++) {
+            array_push($time_option, "$i".":00");
+            array_push($time_option, "$i".":30");
+        }
+
+        $user = $this->session->userdata('user');
+        $application = $this->application_model->get_application($applicationId);
+        $application->patient = $this->user_model->get_user($application->patientId);
+        $application->doctor = $this->user_model->get_user($application->doctorId);
+        $data = array(
+            'application' => $application,
+            'time_option'=> $time_option
+        );
+        $this->my_smarty->assign('data', $data)->view('secretary/application');
+    }
+
     // public function editSchedule($scheduleId = "")
     // {
     //     $user = $this->session->userdata('user');
