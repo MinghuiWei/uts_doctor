@@ -70,8 +70,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-// var_dump(gethostname());
-$active_group = in_array(gethostname(), array("dev-leel", "iMac.local")) ? 'default' : 'production';
+$debug = in_array(gethostname(), array("dev-leel", "iMac.local"));
+$active_group = $debug ? 'default' : 'production';
 $query_builder = TRUE;
 
 $db['default'] = array(
