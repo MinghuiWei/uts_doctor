@@ -5,7 +5,7 @@
 */
 class Appointment_model extends CI_Model
 {
-    public $TABLE = "Appointment";
+    public $TABLE = "appointment";
     var $appointmentId = '';
     var $applicationId = '';
     var $date =  '';

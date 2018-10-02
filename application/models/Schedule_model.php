@@ -5,7 +5,7 @@
 */
 class Schedule_model extends CI_Model
 {
-    public $TABLE = "Schedule";
+    public $TABLE = "schedule";
     var $scheduleId = '';
     var $doctorId =  '';
     var $day =  '';

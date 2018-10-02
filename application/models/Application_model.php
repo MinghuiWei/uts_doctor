@@ -5,7 +5,7 @@
 */
 class Application_model extends CI_Model
 {
-    public $TABLE = "Application";
+    public $TABLE = "application";
     var $applicationId = '';
     var $gp =  '';
     var $gpAddress =  '';
