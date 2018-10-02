@@ -9,6 +9,6 @@
     "require": {},
     "require-dev": {
         "kenjis/ci-phpunit-test": "^0.16.1",
-        "phpunit/phpunit": "^7.3.5"
+        "phpunit/phpunit": "7.3.5"
     }
 }
