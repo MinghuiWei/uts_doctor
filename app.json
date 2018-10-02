@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "postdeploy": "cd application/tests/; ../../vendor/bin/phpunit"
+    "postdeploy": "sh test.sh"
   },
   "environments": {
     "test": {
       "scripts": {
-        "test": "cd application/tests/; ../../vendor/bin/phpunit"
+        "test": "sh test.sh"
       }
     }
   }
