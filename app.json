@@ -1,9 +1,12 @@
 {
-    "environments": {
-      "test": {
-        "scripts": {
-          "test": "cd application/tests/; ../../vendor/bin/phpunit"
-        }
+  "scripts": {
+    "postdeploy": "cd application/tests/; ../../vendor/bin/phpunit"
+  },
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "cd application/tests/; ../../vendor/bin/phpunit"
       }
     }
   }
+}
