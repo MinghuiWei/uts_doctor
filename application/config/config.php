@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+$debug = in_array(gethostname(), array("dev-leel", "iMac.local", "Xinyus-MacBook.local"));
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = in_array(gethostname(), array("dev-leel", "iMac.local")) ? 'http://localhost/uts_doctor' : 'https://vast-forest-38180.herokuapp.com/';
+$config['base_url'] = $debug ? 'http://localhost/uts_doctor' : 'https://vast-forest-38180.herokuapp.com/';
 
 /*
 |--------------------------------------------------------------------------
@@ -381,8 +382,7 @@ $config['encryption_key'] = '';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-// $config['sess_save_path'] = NULL;
-$config['sess_save_path'] = sys_get_temp_dir();
+$config['sess_save_path'] = $debug ? NULL : sys_get_temp_dir();
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;

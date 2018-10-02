@@ -1,9 +1,12 @@
 {
-    "environments": {
-      "test": {
-        "scripts": {
-          "test": "phpunit"
-        }
+  "scripts": {
+    "postdeploy": "sh test.sh"
+  },
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "sh test.sh"
       }
     }
   }
+}

@@ -6,9 +6,11 @@
             "email": "853982992@qq.com"
         }
     ],
-    "require": {},
-    "require-dev": {
+    "require": {
+        "stripe/stripe-php": "^6.19",
         "kenjis/ci-phpunit-test": "^0.16.1",
         "phpunit/phpunit": "7.3.5"
+    },
+    "require-dev": {
     }
 }

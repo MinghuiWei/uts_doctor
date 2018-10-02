@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="CodeIgniter Application Test Suite" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="0.059966">
-    <testsuite name="Welcome_test" file="D:\xampp\htdocs\uts_doctor\application\tests\controllers\Home_test.php" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="0.059966">
-      <testcase name="test_index" class="Welcome_test" classname="Welcome_test" file="D:\xampp\htdocs\uts_doctor\application\tests\controllers\Home_test.php" line="13" assertions="1" time="0.041994"/>
-      <testcase name="test_method_404" class="Welcome_test" classname="Welcome_test" file="D:\xampp\htdocs\uts_doctor\application\tests\controllers\Home_test.php" line="19" assertions="1" time="0.017259"/>
-      <testcase name="test_APPPATH" class="Welcome_test" classname="Welcome_test" file="D:\xampp\htdocs\uts_doctor\application\tests\controllers\Home_test.php" line="25" assertions="1" time="0.000713"/>
+  <testsuite name="CodeIgniter Application Test Suite" tests="10" assertions="10" errors="0" failures="0" skipped="0" time="12.308914">
+    <testsuite name="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" tests="10" assertions="10" errors="0" failures="0" skipped="0" time="12.308914">
+      <testcase name="test_index" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="13" assertions="1" time="1.563484"/>
+      <testcase name="test_login" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="19" assertions="1" time="1.427084"/>
+      <testcase name="test_signup" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="25" assertions="1" time="1.329707"/>
+      <testcase name="test_doctor" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="31" assertions="1" time="1.130943"/>
+      <testcase name="test_sec" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="37" assertions="1" time="1.342988"/>
+      <testcase name="test_patient" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="43" assertions="1" time="1.318661"/>
+      <testcase name="test_admin" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="49" assertions="1" time="1.324751"/>
+      <testcase name="test_doctor_appointments" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="55" assertions="1" time="1.359261"/>
+      <testcase name="test_method_404" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="61" assertions="1" time="1.511177"/>
+      <testcase name="test_APPPATH" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="67" assertions="1" time="0.000858"/>
     </testsuite>
   </testsuite>
 </testsuites>
