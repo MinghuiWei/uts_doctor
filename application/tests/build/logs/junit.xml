@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="CodeIgniter Application Test Suite" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="2.527284">
-    <testsuite name="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="2.527284">
-      <testcase name="test_index" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="13" assertions="1" time="1.215248"/>
-      <testcase name="test_method_404" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="19" assertions="1" time="1.309332"/>
-      <testcase name="test_APPPATH" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="25" assertions="1" time="0.002704"/>
+  <testsuite name="CodeIgniter Application Test Suite" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="2.527268">
+    <testsuite name="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="2.527268">
+      <testcase name="test_index" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="13" assertions="1" time="1.304158"/>
+      <testcase name="test_method_404" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="19" assertions="1" time="1.221845"/>
+      <testcase name="test_APPPATH" class="Welcome_test" classname="Welcome_test" file="/Applications/XAMPP/xamppfiles/htdocs/uts_doctor/application/tests/controllers/Home_test.php" line="25" assertions="1" time="0.001265"/>
     </testsuite>
   </testsuite>
 </testsuites>
