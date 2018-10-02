@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "postinstall": "sh test.sh",
     "postdeploy": "sh test.sh"
   },
   "environments": {
