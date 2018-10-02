@@ -46,6 +46,7 @@ class Welcome_test extends TestCase
 		$this->assertEquals(NULL, $output);
 	}
 
+	
 	public function test_admin()
 	{
 		$output = $this->request('GET', 'admin/index');
