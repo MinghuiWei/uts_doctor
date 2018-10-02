@@ -7,10 +7,10 @@
         }
     ],
     "require": {
-        "stripe/stripe-php": "^6.19"
-    },
-    "require-dev": {
+        "stripe/stripe-php": "^6.19",
         "kenjis/ci-phpunit-test": "^0.16.1",
         "phpunit/phpunit": "7.3.5"
+    },
+    "require-dev": {
     }
 }
