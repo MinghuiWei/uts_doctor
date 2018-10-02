@@ -23,7 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/uts_doctor';
+
+$config['base_url'] = in_array(gethostname(), array("dev-leel", "iMac.local")) ? 'http://localhost/uts_doctor' : 'https://vast-forest-38180.herokuapp.com/';
 
 /*
 |--------------------------------------------------------------------------
