@@ -8,7 +8,6 @@ application/logs/*
 
 !application/*/.htaccess
 
-composer.lock
 composer.phar
 
 user_guide_src/build/*
