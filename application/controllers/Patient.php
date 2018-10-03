@@ -139,9 +139,9 @@ class Patient extends CI_Controller {
             if ($this->upload->do_upload('referal'))
             {
                 $input['referal'] = $this->upload->data('file_name');
-                // var_dump($this->upload->data('file_name'));
+                var_dump($this->upload->data('file_name'));
             } else {
-                // var_dump($this->upload->display_errors());
+                var_dump($this->upload->display_errors());
             }
 
             if ($this->upload->do_upload('documents'))
