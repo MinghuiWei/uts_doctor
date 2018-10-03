@@ -98,14 +98,14 @@ $db['default'] = array(
 
 $db['production'] = array(
 	'dsn'	=> '',
-	'hostname' => 'frances.li',
+	'hostname' => '34.216.133.203',
 	'username' => 'uts',
 	'password' => 'uts',
 	'database' => 'uts_doctor',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
+	'db_debug' => TRUE,
 	'cache_on' => FALSE,
 	'cachedir' => '',
 	'char_set' => 'utf8',
