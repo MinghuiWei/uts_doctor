@@ -25,6 +25,7 @@ $debug = in_array(gethostname(), array("dev-leel", "iMac.local", "Xinyus-MacBook
 |
 */
 
+
 $config['base_url'] = $debug ? 'http://localhost/uts_doctor' : 'https://vast-forest-38180.herokuapp.com/';
 
 /*
