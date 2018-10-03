@@ -133,15 +133,15 @@ class Patient extends CI_Controller {
             );
 
             $config['upload_path'] = "./uploads";
-            $config['allowed_types'] = 'gif|jpg|png|docx|pdf|txt|zip';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png|docx|pdf|txt|zip';
             $this->load->library('upload', $config);
 
             if ($this->upload->do_upload('referal'))
             {
                 $input['referal'] = $this->upload->data('file_name');
-                var_dump($this->upload->data('file_name'));
+                // var_dump($this->upload->data('file_name'));
             } else {
-                var_dump($this->upload->display_errors());
+                // var_dump($this->upload->display_errors());
             }
 
             if ($this->upload->do_upload('documents'))
