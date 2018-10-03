@@ -152,6 +152,7 @@ class Patient extends CI_Controller {
                 // var_dump($this->upload->display_errors());
             }
 
+            
             if ($applicationId) {
                 $this->application_model->update_application($input);
                 if ($action == 'continue') {
