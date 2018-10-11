@@ -74,5 +74,6 @@ class Welcome_test extends TestCase
 			$actual,
 			'Your APPPATH seems to be wrong. Check your $application_folder in tests/Bootstrap.php'
 		);
+
 	}
 }
