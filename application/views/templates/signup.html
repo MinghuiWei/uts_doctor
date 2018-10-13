@@ -1,10 +1,10 @@
 {extends file='layout.html'}
 {block name=body}
 
-<div class="row mt-5">
+<div class="row mt-5 loginform">
     <div class="col-8 offset-2">
         <div class="card shadow">
-            <div class="card-header bg-info text-white text-center">Sign up</div>
+            <div class="card-header text-center">Register to the Hospital Reservation System</div>
             <div class="card-body">
                 <form method="post">
                     {if $data.error_msgs}
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-outline-primary btn-block">Signup</button>
+                    <button type="submit" class="btn btn-primary btn-block">Signup</button>
                 </form>
 
             </div>

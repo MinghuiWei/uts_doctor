@@ -8,6 +8,8 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
+    <link rel="stylesheet" href="http://localhost/hospitalres/css/style.css">
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -50,6 +52,12 @@
                 }
             });
 
+            if ($(".mt-5").hasClass("loginform")) {
+
+                // Then add class close to trigger div
+                $(".loginclasses").addClass("login-img");
+            }
+
             $('.data-table').DataTable();
         });
     </script>
@@ -59,12 +67,9 @@
 <body>
     <div class="container-fluid">
         <div class="row" style="min-height: 100vh; position: relative;">
-            <div class="col-2 bg-info text-white" id="left-nav">
+            <div class="col-2 bg-info side-menu white-text" id="left-nav">
                 <div class="my-3">
-                    <i class="fas fa-hospital float-right" style="font-size:300%; position: relative; top:2rem"></i>
-                    <h3 class="text-right" style="margin-right:4rem">
-                        Hospital Reservation System
-                    </h3>
+                    <div class="app-logo"></div>
                 </div>
 
                 <ul class="list-group list-group-flush">
@@ -72,37 +77,37 @@
                     <!-- patient Menu -->
                     {if $smarty.session.user->type == 'patient'}
                     <!-- <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/patient')}">
+                        <a class="white-text" href="{site_url('/patient')}">
                             <i class="fas fa-home mr-2"></i>
                             Home&nbsp;
                         </a>
                     </li> -->
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/patient/editInfo')}">
+                        <a class="white-text" href="{site_url('/patient/editInfo')}">
                             <i class="fas fa-user mr-2"></i>
                             Edit info&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/patient/applications')}">
+                        <a class="white-text" href="{site_url('/patient/applications')}">
                             <i class="fas fa-file-invoice mr-2"></i>
                             Applications&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/patient/appointments')}">
+                        <a class="white-text" href="{site_url('/patient/appointments')}">
                             <i class="fas fa-calendar-alt mr-2"></i>
                             Appointments&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/patient/doctors')}">
+                        <a class="white-text" href="{site_url('/patient/doctors')}">
                             <i class="fas fa-user-md mr-2"></i>
                             Doctors&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/home/logout')}">
+                        <a class="white-text" href="{site_url('/home/logout')}">
                             <i class="fas fa-sign-out-alt mr-2"></i>
                             Logout&nbsp;
                         </a>
@@ -111,19 +116,19 @@
                     <!-- Doctor Menu -->
                     {if $smarty.session.user->type == 'doctor'}
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/doctor/appointments')}">
+                        <a class="white-text" href="{site_url('/doctor/appointments')}">
                             <i class="fas fa-calendar-alt mr-2"></i>
                             Appointments&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/doctor/schedules')}">
+                        <a class="white-text" href="{site_url('/doctor/schedules')}">
                             <i class="fas fa-clock mr-2"></i>
                             Schedules&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/home/logout')}">
+                        <a class="white-text" href="{site_url('/home/logout')}">
                             <i class="fas fa-sign-out-alt mr-2"></i>
                             Logout&nbsp;
                         </a>
@@ -133,13 +138,13 @@
                     <!-- Secretary Menu -->
                     {if $smarty.session.user->type == 'secretary'}
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/secretary/doctors')}">
+                        <a class="white-text" href="{site_url('/secretary/doctors')}">
                             <i class="fas fa-user-md mr-2"></i>
                             Doctors&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/home/logout')}">
+                        <a class="white-text" href="{site_url('/home/logout')}">
                             <i class="fas fa-sign-out-alt mr-2"></i>
                             Logout&nbsp;
                         </a>
@@ -149,19 +154,19 @@
                     <!-- Admin Menu -->
                     {if $smarty.session.user->type == 'admin'}
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/admin/doctors')}">
+                        <a class="white-text" href="{site_url('/admin/doctors')}">
                             <i class="fas fa-user-md mr-2"></i>
                             Doctors&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/admin/secretaries')}">
+                        <a class="white-text" href="{site_url('/admin/secretaries')}">
                             <i class="fas fa-user-ninja mr-2"></i>
                             Secretaries&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/home/logout')}">
+                        <a class="white-text" href="{site_url('/home/logout')}">
                             <i class="fas fa-sign-out-alt mr-2"></i>
                             Logout&nbsp;
                         </a>
@@ -170,13 +175,13 @@
                     {/if}
                     {if not isset($smarty.session.user)}
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/home/login')}">
+                        <a class="white-text" href="{site_url('/home/login')}">
                             <i class="fas fa-sign-in-alt mr-2"></i>
                             Login&nbsp;
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a class="text-white" href="{site_url('/home/signup')}">
+                        <a class="white-text" href="{site_url('/home/signup')}">
                             <i class="fas fa-user-plus mr-2"></i>
                             Sign up&nbsp;
                         </a>
@@ -194,7 +199,7 @@
                         <span class="badge badge-secondary text-capitalize">{$smarty.session.user->type}</span></p>
                     {/if}
             </div>
-            <div class="col-10 p-5">
+            <div class="col-10 p-5 loginclasses">
                 {block name=body}{/block}
             </div>
         </div>
